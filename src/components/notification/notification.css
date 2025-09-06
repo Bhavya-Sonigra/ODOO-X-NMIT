@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .notification-wrapper {
     display: flex;
     flex-direction: column;
@@ -38,17 +40,17 @@
 .notification-title {
     font-size: 15px;
     font-weight: bold;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .notification-desc {
-    color: grey;
+    color: var(--text-grey);
     font-size: 11px;
 
 }
 
 .notification-date {
-    color: #0066FF;
+    color: var(--primary-green);
     font-size: 11px;
     font-weight: 500;
     text-transform: capitalize;
@@ -102,12 +104,12 @@
 }
 .notification-btn{
     background: transparent;
-    color: grey;
+    color: var(--text-grey);
     border: none;
     outline: none;
     cursor: pointer;
    
 }
 .notification-btn:hover{
-    color: #0066FF;
+    color: var(--primary-green);
 }

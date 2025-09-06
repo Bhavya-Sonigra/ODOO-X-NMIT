@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .home-container {
     margin-left: auto;
     margin-right: auto;
@@ -9,7 +11,7 @@
 }
 
 .active {
-    color: #0066FF !important;
+    color: var(--primary-green) !important;
 }
 
 .categories-wrapper {
@@ -38,7 +40,7 @@
 }
 
 .distance {
-    color: #0066FF;
+    color: var(--primary-green);
     font-size: 11px;
     cursor: pointer;
 }
@@ -71,7 +73,7 @@
 }
 
 .distance-item:hover {
-    color: #0066FF;
+    color: var(--primary-green);
     text-decoration: underline;
 }
 
@@ -86,7 +88,7 @@
     justify-content: flex-start;
     gap: 5px;
     cursor: pointer;
-    color: grey;
+    color: var(--text-grey);
     border: 1px solid whitesmoke;
     border-radius: 100px;
     padding: 6px 10px;
@@ -95,7 +97,7 @@
 }
 
 .categories-item:hover {
-    color: #0066FF !important;
+    color: var(--primary-green) !important;
 }
 
 .categories-item-logo {
@@ -165,7 +167,7 @@
 
 .ce-item {
     width: 100%;
-    color: grey;
+    color: var(--text-grey);
     font-size: 11px;
     cursor: pointer;
     padding: 4px 8px;
@@ -176,7 +178,7 @@
 }
 
 .ce-item:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .ec-triangle-ui {
@@ -191,7 +193,7 @@
 /* all post */
 .h-fTitle {
     font-size: 20px;
-    color: grey;
+    color: var(--text-grey);
     font-weight: 500;
     margin-top: 20px;
 }
@@ -270,7 +272,7 @@
     text-wrap: nowrap;
     width: 170px;
     text-overflow: ellipsis;
-    color: #0066FF;
+    color: var(--primary-green);
     font-size: 15px;
     font-weight: 300;
 }
@@ -287,7 +289,7 @@
 .h-product-date {
     width: max-content;
     font-size: 11px;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .h-product-location {
@@ -296,7 +298,7 @@
     text-wrap: nowrap;
     text-overflow: ellipsis;
     width: 200px;
-    color: grey;
+    color: var(--text-grey);
     font-size: 12px;
     font-weight: 200;
 }
@@ -330,7 +332,7 @@
 }
 
 .skeleton-animation {
-    background-color: #e0e0e0;
+    background-color: var(--bg-light-green);
     position: relative;
     overflow: hidden;
 }
@@ -369,7 +371,7 @@
     left: -150px;
     height: 100%;
     width: 100%;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+    background: linear-gradient(90deg, rgba(76, 175, 80, 0), rgba(76, 175, 80, 0.4), rgba(76, 175, 80, 0));
     animation: shimmer 1.5s infinite;
 }
 

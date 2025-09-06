@@ -1,0 +1,52 @@
+/* EcoFinds Color Palette - Green Theme */
+:root {
+  /* Primary Colors */
+  --primary-green: #2E7D32;        /* Main brand green */
+  --primary-green-light: #4CAF50;  /* Lighter green for hover states */
+  --primary-green-dark: #1B5E20;   /* Darker green for active states */
+  --accent-green: #66BB6A;         /* Accent green */
+  
+  /* Secondary Colors */
+  --secondary-green: #81C784;      /* Secondary green */
+  --success-green: #4CAF50;        /* Success states */
+  --eco-lime: #8BC34A;             /* Lime green accent */
+  
+  /* Background Colors */
+  --bg-light-green: rgba(76, 175, 80, 0.1);  /* Light green background */
+  --bg-pale-green: rgba(46, 125, 50, 0.05);  /* Pale green background */
+  --bg-eco-hover: rgba(76, 175, 80, 0.08);   /* Hover background */
+  
+  /* Text Colors */
+  --text-green: #2E7D32;           /* Green text */
+  --text-grey: #757575;            /* Grey text */
+  --text-dark: #333333;            /* Dark text */
+  --text-white: #ffffff;           /* White text */
+  --text-light-grey: #9E9E9E;      /* Light grey text */
+  
+  /* Border Colors */
+  --border-green: #4CAF50;         /* Green borders */
+  --border-light: #E0E0E0;         /* Light borders */
+  --border-eco-focus: #2E7D32;     /* Focus border */
+  
+  /* Shadow Colors */
+  --shadow-green: rgba(46, 125, 50, 0.2);    /* Green shadows */
+  --shadow-light: rgba(76, 175, 80, 0.15);   /* Light green shadows */
+  --shadow-dark: rgba(27, 94, 32, 0.3);      /* Dark green shadows */
+  
+  /* Icon Colors */
+  --icon-green: #2E7D32;           /* Green icons */
+  --icon-grey: #757575;            /* Grey icons */
+  --icon-hover: #4CAF50;           /* Icon hover state */
+  
+  /* Button Colors */
+  --btn-primary: #2E7D32;          /* Primary button */
+  --btn-primary-hover: #4CAF50;    /* Primary button hover */
+  --btn-secondary: #81C784;        /* Secondary button */
+  --btn-disabled: #C8E6C9;         /* Disabled button */
+  
+  /* Status Colors */
+  --status-success: #4CAF50;       /* Success status */
+  --status-warning: #FF9800;       /* Warning status */
+  --status-error: #F44336;         /* Error status */
+  --status-info: #2196F3;          /* Info status */
+}

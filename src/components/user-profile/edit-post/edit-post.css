@@ -1,4 +1,6 @@
 
+@import '../../../eco-colors.css';
+
 .edit-product-item-container{
     margin-bottom: 100px;
 
@@ -39,7 +41,7 @@
   /* .edit-product-button */
   .edit-product-button {
     width:max-content;
-    background-color: #007bff;
+    background-color: var(--primary-green);
     color: white;
     padding: 10px;
     border: none;
@@ -51,6 +53,6 @@
   }
   
   .edit-product-button:hover {
-    background-color: #006fe6;
+    background-color: var(--primary-green-light);
   }
  

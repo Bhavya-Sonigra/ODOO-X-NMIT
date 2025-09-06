@@ -1,3 +1,5 @@
+@import './eco-colors.css';
+
 .loader-container {
     position: fixed;
     top: 0;
@@ -7,7 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:whitesmoke;
+    background-color: var(--bg-pale-green);
     z-index: 9999; 
   }
  

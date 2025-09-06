@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .chat-aside {
     position: relative;
     height: 100vh;
@@ -73,7 +75,7 @@
     background: white;
     cursor: pointer;
     border-radius: 50%;
-    color: grey;
+    color: var(--text-grey);
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
 
@@ -84,7 +86,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background: #0066FF;
+    background: var(--primary-green);
     cursor: pointer;
     border-radius: 100px;
     gap: 1px;
@@ -94,7 +96,7 @@
 }
 
 .chats-header-icon:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 
 }
 
@@ -124,7 +126,7 @@
     gap: 20px;
     background: white;
     border-radius: 2px;
-    color: grey;
+    color: var(--text-grey);
     padding: 10px 12px;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 1px;
     transform-origin: top left;
@@ -156,13 +158,13 @@
 }
 
 .selected-user-name {
-    color: grey;
+    color: var(--text-grey);
     font-size: 15px;
     font-weight: bold;
 }
 
 .selected-user-email {
-    color: grey;
+    color: var(--text-grey);
     font-size: 11px;
 }
 
@@ -181,7 +183,7 @@
 .selected-user-report-btn {
     flex-grow: 1;
     border: none;
-    color: grey;
+    color: var(--text-grey);
     font-size: 12px;
     border-radius: 5%;
     outline: none;
@@ -210,17 +212,17 @@
 }
 
 .selected-user-phone-number {
-    color: grey;
+    color: var(--text-grey);
     font-size: 14px;
     font-weight: 300;
 }
 
 .selected-user-send-callback-btn:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .selected-user-block-btn:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .selected-user-report-btn {
@@ -241,7 +243,7 @@
     padding: 20px 12px;
     background: white;
     border-radius: 6px;
-    color: grey;
+    color: var(--text-grey);
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
     transform-origin: top right;
     animation: scale-up 0.3s 1;
@@ -263,14 +265,14 @@
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
-    color: grey;
+    color: var(--text-grey);
     font-size: 13px;
     cursor: pointer;
     padding: 4px 2px;
 }
 
 .chat-box-opt-item:hover {
-    color: #0066FF
+    color: var(--primary-green)
 }
 
 .header-icon {
@@ -280,7 +282,7 @@
 
 .chat-title-wrapper {
     padding: 8px 0px;
-    color: grey;
+    color: var(--text-grey);
     font-size: 18px;
     font-weight: 500;
 }
@@ -305,7 +307,7 @@
 }
 
 .chat-search-icon {
-    color: grey;
+    color: var(--text-grey);
     font-size: 18px;
 }
 
@@ -374,7 +376,7 @@
 .chat-list-user-name {
     font-size: 14px;
     font-weight: 500;
-    color: grey;
+    color: var(--text-grey);
     width: 120px;
     text-overflow: ellipsis;
     text-wrap: nowrap;
@@ -383,7 +385,7 @@
 .chat-list-date {
     font-size: 10px;
     font-weight: 200;
-    color: grey;
+    color: var(--text-grey);
     width: max-content;
     margin-left: auto;
 }
@@ -396,7 +398,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #0066FF;
+    background: var(--primary-green);
     padding: 4px;
     font-size: 10px;
     font-weight: 500;
@@ -405,7 +407,7 @@
 }
 
 .chat-list-last-chat {
-    color: grey;
+    color: var(--text-grey);
     font-size: 11px;
     display: block;
     overflow: hidden;
@@ -442,7 +444,7 @@
     width: 100px;
     display: inline-block;
     text-overflow: ellipsis;
-    color: grey;
+    color: var(--text-grey);
     font-size: 14px;
     cursor: pointer;
     font-weight: 500;
@@ -450,14 +452,14 @@
 }
 
 .chated-date {
-    color: grey;
+    color: var(--text-grey);
     font-size: 10px;
     cursor: pointer;
     font-weight: 200;
 }
 
 .last-chat-msg {
-    color: grey;
+    color: var(--text-grey);
     font-size: 11px;
     cursor: pointer;
     font-weight: 200;
@@ -469,7 +471,7 @@
 .chat-not-selected-msg {
     font-size: 14px;
     text-align: center;
-    color: grey;
+    color: var(--text-grey);
     max-width: 300px;
 }
 
@@ -522,7 +524,7 @@
 }
 
 .chat-box-icon {
-    color: grey;
+    color: var(--text-grey);
     cursor: pointer;
     margin-left: 10px;
     font-size: 25px;
@@ -536,7 +538,7 @@
 }
 
 .chat-box-icon :hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .chat-send-btn {
@@ -547,7 +549,7 @@
     justify-content: center;
     padding: 8px 12px;
     border-radius: 100px;
-    background: #0066FF;
+    background: var(--primary-green);
     cursor: pointer;
     border: none;
     outline: none;
@@ -559,7 +561,7 @@
 .chat-send-btn.disabled {
     background-color: whitesmoke;
     cursor: not-allowed;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .chat-box-header {
@@ -592,13 +594,13 @@
 
 .chat-box-user-name {
     font-size: 13px;
-    color: grey;
+    color: var(--text-grey);
     font-weight: 500;
 }
 
 .chat-box-user-date {
     font-size: 10px;
-    color: grey;
+    color: var(--text-grey);
     margin-top: -3px;
 }
 
@@ -627,11 +629,11 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .chat-box-opt-icon:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 
 }
 
@@ -810,7 +812,7 @@
 .ch-file-title {
     font-size: 13px;
     padding-bottom: 6px;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .chat-box-file-choose-item {
@@ -824,13 +826,13 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    color: grey;
+    color: var(--text-grey);
     cursor: pointer;
     padding: 4px 0px;
 }
 
 .chat-box-file-choose-item label:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .chat-add-icon {
@@ -927,7 +929,7 @@
     width: max-content;
     padding: 8px 4px;
     height: max-content;
-    color: grey;
+    color: var(--text-grey);
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -949,7 +951,7 @@
 }
 
 .message-options-item:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .call-back-wrapper {
@@ -991,13 +993,13 @@
 .call-back-title {
     font-size: 22px;
     font-weight: bold;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .call-back-desc {
     font-size: 13px;
     font-weight: normal;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .call-back-input-box-wrapper {
@@ -1039,8 +1041,8 @@
 }
 
 .call-back-request-btn {
-    background-color: #0066FF;
-     border: 1px solid #0066FF;
+    background-color: var(--primary-green);
+     border: 1px solid var(--primary-green);
     color: white;
 }
 
@@ -1075,7 +1077,7 @@ border-radius: 5px;
 .chat-list-active-icon{
     width: 12px;
     height: 12px;
-    background-color: #0066FF;
+    background-color: var(--primary-green);
     position: absolute;
     bottom: 5px;
     right: -3px;

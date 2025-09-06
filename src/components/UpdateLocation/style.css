@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .update-location-popup {
     display: flex;
     flex-direction: column;
@@ -24,7 +26,7 @@
 
 .uploaction-title {
     font-size: 26px;
-    color: grey;
+    color: var(--text-grey);
     font-weight: 500;
     align-self: center;
 }
@@ -60,15 +62,15 @@
     border-bottom: 1px solid whitesmoke;
     background-color: white;
     font-size: 13px;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .location-suggestions-item:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .locationIcon {
-    color: #0066FF;
+    color: var(--primary-green);
     font-size: 20px !important;
     height: 20px;
     width: 20px;
@@ -78,7 +80,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: grey;
+    color: var(--text-grey);
     gap: 8px;
     justify-content: space-between;
     cursor: pointer;
@@ -97,13 +99,13 @@
 }
 
 .curr-wra:hover{
-    color: #0066FF;
+    color: var(--primary-green);
 }
 .use-current-location-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: grey;
+    color: var(--text-grey);
     gap: 8px;
     cursor: pointer;
     border: 1px solid whitesmoke;
@@ -112,7 +114,7 @@
 }
 
 .use-current-location-wrapper:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .current-location-text-wrapper {
@@ -138,7 +140,7 @@
 }
 
 .close-location-popup {
-    background-color: #0066FF;
+    background-color: var(--primary-green);
     color: white;
     border: none;
     width: max-content;

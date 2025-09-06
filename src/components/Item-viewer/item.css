@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .item-container {
     display: flex;
     flex-direction: row;
@@ -14,11 +16,11 @@
 
 .i-icon{
     font-size: 18px;
-    color: grey;
+    color: var(--text-grey);
     cursor: pointer;
 }
 .i-icon:hover{
-    color: #0066FF;
+    color: var(--primary-green);
 }
 .related-item-wrapper {
     display: flex;
@@ -163,7 +165,7 @@
 .item-viewer-dec {
     font-size: 13px;
     font-weight: 300;
-    color: grey;
+    color: var(--text-grey);
 }
 .item-viewer-product-date{
     text-wrap: nowrap;
@@ -176,7 +178,7 @@
     display: flex;
     flex-direction: row;
     gap: 30px;
-    color: grey;
+    color: var(--text-grey);
     font-size: 15px;
 }
 
@@ -203,7 +205,7 @@
 }
 
 .chat-with-seller {
-    background: #0066FF;
+    background: var(--primary-green);
     color: white;
     width: 100%;
     padding: 8px 12px;
@@ -319,7 +321,7 @@
     text-wrap: nowrap;
     width: 170px;
     text-overflow: ellipsis;
-     color: #0066FF;
+     color: var(--primary-green);
     font-size: 15px;
     font-weight: 300;
 }
@@ -330,7 +332,7 @@
     text-wrap: nowrap;
     text-overflow: ellipsis;
     width: 250px;
-    color: grey;
+    color: var(--text-grey);
     font-size: 12px;
     font-weight: 200;
 }
@@ -364,7 +366,7 @@
 }
 
 .skeleton-animation {
-    background-color: #e0e0e0;
+    background-color: var(--bg-light-green);
     position: relative;
     overflow: hidden;
 }
@@ -403,7 +405,7 @@
     left: -150px;
     height: 100%;
     width: 100%;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+    background: linear-gradient(90deg, rgba(76, 175, 80, 0), rgba(76, 175, 80, 0.4), rgba(76, 175, 80, 0));
     animation: shimmer 1.5s infinite;
 }
 
@@ -418,7 +420,7 @@
 }
 
 .item-viwer-open-location-in-google-map {
-    color: #0066FF;
+    color: var(--primary-green);
     cursor: pointer;
     font-size: 12px;
     width: max-content;
@@ -431,7 +433,7 @@
 
 .item-viewer-details-address {
     font-size: 12px;
-    color: grey;
+    color: var(--text-grey);
 }
 
 .item-viwer-open-location-in-google-map:hover {
@@ -483,7 +485,7 @@
 }
 
 .item-vieweer-seller-address {
-    color: grey;
+    color: var(--text-grey);
     font-size: 11px;
 }
 

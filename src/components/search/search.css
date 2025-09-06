@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .search-result-container {
     max-width: 600px;
     margin-left: auto;
@@ -52,18 +54,18 @@
 .search-result-title {
     font-size: 15px;
     font-weight: 500px;
-    color: #0066FF;
+    color: var(--primary-green);
 
 }
 
 .search-result-address {
     font-size: 11px;
-    color: grey;
+    color: var(--text-grey);
     text-wrap: wrap;
 }
 
 .search-query {
-    color: grey;
+    color: var(--text-grey);
     font-weight: 300;
     font-size: 14px;
     padding: 15px 0px;

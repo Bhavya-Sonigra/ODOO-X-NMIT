@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .account-wrapper {
     margin-left: auto;
     margin-right: auto;
@@ -57,7 +59,7 @@
     border-radius: 50%;
     height: 50px;
     width: 50px;
-    /* border: 2px solid #0066FF; */
+    /* border: 2px solid var(--primary-green); */
 }
 
 .acc-user-name {
@@ -70,7 +72,7 @@
     display: inline-block;
     font-size: 12px;
     font-weight: 300;
-    color: grey;
+    color: var(--text-grey);
     width: 150px;
     text-wrap: nowrap;
     overflow: hidden;
@@ -95,12 +97,12 @@
 }
 
 .acc-setting-icon {
-    color: #0066FF;
+    color: var(--primary-green);
     font-size: 16px;
 }
 
 .acc-setting-title {
-    color: grey;
+    color: var(--text-grey);
     font-size: 15px;
     font-weight: 500;
 }
@@ -118,7 +120,7 @@
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    color: grey;
+    color: var(--text-grey);
     font-size: 13px;
     cursor: pointer;
     list-style: none;
@@ -128,11 +130,11 @@
 }
 
 .acc-setting-item:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .active-setting-item {
-    color: #0066FF;
+    color: var(--primary-green);
 
 }
 
@@ -147,7 +149,7 @@
     margin-right: auto;
     margin-top: 20px;
     align-self: center;
-    color: grey;
+    color: var(--text-grey);
     gap: 15px;
 }
 
@@ -159,7 +161,7 @@
 }
 
 .profile-title-wrapper {
-    border-bottom: 2px solid #0066FF;
+    border-bottom: 2px solid var(--primary-green);
     width: max-content;
     padding-bottom: 5px;
 
@@ -168,7 +170,7 @@
 
 .profile-title {
     font-size: 18px;
-    color: grey;
+    color: var(--text-grey);
     font-weight: 500;
 }
 
@@ -179,7 +181,7 @@
     padding-bottom: 20px;
     padding: 12px 16px;
     border-radius: 10px;
-    background-color: rgba(17, 0, 255, 0.014);
+    background-color: var(--bg-pale-green);
 }
 
 .profile-picture {
@@ -206,7 +208,7 @@
 .profile-user-name {
     font-size: 16px;
     font-weight: 500;
-    color: grey
+    color: var(--text-grey)
 }
 
 .profile-user-email-and-number-wrapper {
@@ -214,7 +216,7 @@
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    color: grey;
+    color: var(--text-grey);
     font-size: 12px;
 
 }
@@ -223,7 +225,7 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: grey;
+    background: var(--text-grey);
 }
 
 .profile-location-icon {
@@ -237,7 +239,7 @@
     gap: 5px;
     max-width: 400px;
     text-wrap: wrap;
-    color: grey;
+    color: var(--text-grey);
     font-size: 12px;
 }
 
@@ -246,7 +248,7 @@
     flex-direction: row;
     gap: 5px;
     align-items: center;
-    background-color: #0066FF;
+    background-color: var(--primary-green);
     color: white;
     border-radius: 100px;
     padding: 8px 12px;
@@ -285,7 +287,7 @@
 .profile-post-tab-item {
     cursor: pointer;
     font-size: 15px;
-    color: grey;
+    color: var(--text-grey);
     font-weight: 500;
     border-bottom: 2px solid white;
     padding: 4px 0px;
@@ -293,11 +295,11 @@
 }
 
 .profile-post-tab-item :hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .profile-post-tab-item.active {
-    border-bottom: 2px solid #0066FF;
+    border-bottom: 2px solid var(--primary-green);
 }
 
 .profile-user-post-wrapper {
@@ -337,7 +339,7 @@
     box-sizing: border-box;
     text-align: center;
     padding: 8px 12px;
-    color: grey;
+    color: var(--text-grey);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -347,7 +349,7 @@
 }
 
 .profile-category-item:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 
@@ -397,7 +399,7 @@
     text-wrap: nowrap;
     width: 170px;
     text-overflow: ellipsis;
-    color: grey;
+    color: var(--text-grey);
     font-size: 15px;
     font-weight: 300;
 }
@@ -408,7 +410,7 @@
     text-wrap: nowrap;
     text-overflow: ellipsis;
     max-width: 150px;
-    color: grey;
+    color: var(--text-grey);
     font-size: 12px;
     font-weight: 200;
 }
@@ -447,11 +449,11 @@
     background: red;
 }
 .available{
-    background: #0066FF;
+    background: var(--primary-green);
 }
 .profile-post-location-icon {
     font-size: 12px;
-    color: grey;
+    color: var(--text-grey);
 }
 .de-btn-cntr{
 
@@ -471,7 +473,7 @@
     outline: none;
 }
 .de-btn-cntr button:nth-child(1){
-    background-color:#0066FF;
+    background-color:var(--primary-green);
 }
 .de-btn-cntr button:nth-child(2){
 background-color: red;
@@ -488,7 +490,7 @@ background-color: red;
 }
 
 .profile-post-option-icon-wrapper {
-    color: grey;
+    color: var(--text-grey);
     height: 30px;
     width: 30px;
     display: flex;
@@ -500,12 +502,12 @@ background-color: red;
 }
 
 .profile-post-option-icon-wrapper:hover {
-    color: #0066FF;
+    color: var(--primary-green);
     background: whitesmoke;
 }
 
 .profile-post-not-found-error {
-    color: grey;
+    color: var(--text-grey);
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
@@ -563,7 +565,7 @@ background-color: red;
 }
 
 .profile-post-option-item:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .profile-post-option-item-icon {
@@ -575,7 +577,7 @@ background-color: red;
 }
 
 .acc-title{
-    color: #0066FF;
+    color: var(--primary-green);
     font-size: 16px;
     font-weight: bold;
     user-select: none;
@@ -652,7 +654,7 @@ background-color: red;
     width: max-content;
     padding: 10px;
     background-color: transparent;
-    color: #0066FF;
+    color: var(--primary-green);
     border: none;
     cursor: pointer;
   }
@@ -660,7 +662,7 @@ background-color: red;
     min-width: 300px;
     margin-top: 20px;
     padding: 12px;
-    background-color: #0066FF;
+    background-color: var(--primary-green);
     color:white;
     border: none;
     cursor: pointer;

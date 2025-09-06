@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .sidebar-container {
     width: fit-content;
     height: 97vh;
@@ -26,7 +28,7 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    color: grey;
+    color: var(--text-grey);
 
 
 }
@@ -71,7 +73,7 @@
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        color: grey;
+        color: var(--text-grey);
         padding: 8px 0px;
     
     
@@ -85,11 +87,11 @@
 }
 
 .sidebar-item-container.active-link {
-    color: #0066ff;
+    color: var(--primary-green);
 }
 
 .sidebar-item-container:hover {
-    color: #0066ff;
+    color: var(--primary-green);
 }
 
 .s-icon {

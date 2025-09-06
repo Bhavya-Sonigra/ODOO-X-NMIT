@@ -1,3 +1,5 @@
+@import '../../eco-colors.css';
+
 .h-container {
     display: flex;
     flex-direction: row;
@@ -12,7 +14,7 @@
 }
 .user-icon{
     font-size: 26px;
-    color: #0066FF;
+    color: var(--primary-green);
 }
 .auth-profile {
     display: flex;
@@ -65,7 +67,7 @@
 }
 
 .profile-see-all-profile{
-    color: #0066FF;
+    color: var(--primary-green);
     font-size: 14px;
     cursor: pointer;
 }
@@ -84,7 +86,7 @@
     cursor: pointer;
 }
 .menu-item:hover{
-    color: #0066FF;
+    color: var(--primary-green);
 }
 .header-side-menu-container.open {
     transform: scale(1); 
@@ -98,7 +100,7 @@
 
 }
 .location-icon {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .logo-and-location-wrapper {
@@ -191,7 +193,7 @@
 
 .close-search-bar {
     display: none;
-    color: #0066FF;
+    color: var(--primary-green);
     font-size: 26px;
     cursor: pointer;
     align-items: center;
@@ -225,7 +227,7 @@
 }
 
 .search-icon:hover {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .search-input {
@@ -238,7 +240,7 @@
 }
 
 ::placeholder {
-    color: grey;
+    color: var(--text-grey);
     font-size: 14px;
 }
 
@@ -257,7 +259,7 @@
     font-size: 14px;
     color: white;
     text-decoration: none;
-    background: #0066FF;
+    background: var(--primary-green);
 }
 
 
@@ -273,7 +275,7 @@
 
 
 .sign-btn {
-    color: #0066FF;
+    color: var(--primary-green);
 }
 
 .notify-icon{
