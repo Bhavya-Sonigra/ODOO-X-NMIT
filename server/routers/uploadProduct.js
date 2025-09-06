@@ -9,7 +9,8 @@ const { validateProduct } = require('../middleware/ecofindValidation');
 const { uploadToCloudinary, getPlaceholderImage } = require('../utils/imageUtils');
 
 
-const BASE_URL = 'http://localhost:5000/files'; 
+// Base URL for serving local files; compute per-request to respect current host/port
+const getFilesBaseUrl = (req) => `${req.protocol}://${req.get('host')}/files`;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -42,27 +43,39 @@ router.post('/upload-product', authenticateToken, upload.array('images', 10), va
     const {category, brand, title, description, date, price, location, lat, lon } = req.body;
     
     try {
-      // Upload images to Cloudinary
-      const uploadPromises = req.files.map(file => 
-        uploadToCloudinary(file.path, `users-products/${userId}`)
+      // Determine if Cloudinary is configured
+      const cloudinaryConfigured = Boolean(
+        process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET
       );
-      
-      // If no files uploaded, use a placeholder
-      let cloudinaryResults = [];
-      try {
-        cloudinaryResults = await Promise.all(uploadPromises);
-      } catch (uploadError) {
-        console.error('Error uploading to Cloudinary:', uploadError);
-        // If upload fails, use placeholders
-        cloudinaryResults = [{
-          url: getPlaceholderImage('product', category),
-          publicId: null
-        }];
+
+      // Build image URLs
+      let images = [];
+      let imagePublicIds = [];
+
+      if (req.files && req.files.length > 0) {
+        const BASE_URL = getFilesBaseUrl(req);
+        if (cloudinaryConfigured) {
+          try {
+            const cloudinaryResults = await Promise.all(
+              req.files.map(file => uploadToCloudinary(file.path, `users-products/${userId}`))
+            );
+            images = cloudinaryResults.map(r => r.url);
+            imagePublicIds = cloudinaryResults.map(r => r.publicId);
+          } catch (err) {
+            console.error('Cloudinary upload failed, falling back to local URLs:', err.message);
+            images = req.files.map(file => `${BASE_URL}/${userId}/${path.basename(file.path)}`.replace(/\\/g, '/'));
+            imagePublicIds = req.files.map(() => null);
+          }
+        } else {
+          // Use local file URLs served by Express static route
+          images = req.files.map(file => `${BASE_URL}/${userId}/${path.basename(file.path)}`.replace(/\\/g, '/'));
+          imagePublicIds = req.files.map(() => null);
+        }
+      } else {
+        // No files: fallback to placeholder
+        images = [getPlaceholderImage('product', category)];
+        imagePublicIds = [null];
       }
-      
-      // Extract image URLs and public IDs
-      const images = cloudinaryResults.map(result => result.url);
-      const imagePublicIds = cloudinaryResults.map(result => result.publicId);
       
       // Create the product object
       const productData = {

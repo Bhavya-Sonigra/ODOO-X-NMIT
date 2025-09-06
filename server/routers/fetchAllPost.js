@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../Models/product'); 
 const User = require('../Models/Users');
+const path = require('path');
+
+// Normalize image paths to absolute URLs served from /files
+const normalizeImages = (images, userId, req) => {
+    if (!Array.isArray(images)) return [];
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    return images.map((img) => {
+        if (!img) return img;
+        if (/^https?:\/\//i.test(img)) return img;
+        if (img.startsWith('/files/')) return `${baseUrl}${img}`;
+        const fileName = path.basename(img);
+        return `${baseUrl}/files/${userId}/${fileName}`;
+    });
+};
 
 // Route to get products with location-based filtering and category search
 router.get('/products/nearby', async (req, res) => {
@@ -43,10 +57,11 @@ router.get('/products/nearby', async (req, res) => {
         const products = await Product.find(query).sort({ createdAt: -1 });
 
         // Fetch user details and combine with product data
-        const productWithUsers = await Promise.all(products.map(async (product) => {
+    const productWithUsers = await Promise.all(products.map(async (product) => {
             const user = await User.findOne({ userId: product.userId });
             return {
-                ...product.toObject(),
+        ...product.toObject(),
+        images: normalizeImages(product.images, product.userId, req),
                 user: user ? { name: user.name, email: user.email, profile: user.profile, phoneNumber: user.phoneNumber } : null
             };
         }));

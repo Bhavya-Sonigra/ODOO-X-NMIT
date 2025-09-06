@@ -1,6 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../Models/product');
+const path = require('path');
+
+const normalizeImages = (images, userId, req) => {
+  if (!Array.isArray(images)) return [];
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
+  return images.map((img) => {
+    if (!img) return img;
+    if (/^https?:\/\//i.test(img)) return img;
+    if (img.startsWith('/files/')) return `${baseUrl}${img}`;
+    const fileName = path.basename(img);
+    return `${baseUrl}/files/${userId}/${fileName}`;
+  });
+};
 
 // Search route - title-only matching for precise search
 router.get('/search', async (req, res) => {
@@ -37,7 +50,7 @@ router.get('/search', async (req, res) => {
       };
     }
 
-    const results = await Product.find(searchCriteria)
+  const results = await Product.find(searchCriteria)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit));
@@ -45,8 +58,13 @@ router.get('/search', async (req, res) => {
     const totalResults = await Product.countDocuments(searchCriteria);
     const totalPages = Math.ceil(totalResults / parseInt(limit));
 
+    const normalizedResults = results.map(p => ({
+      ...p.toObject(),
+      images: normalizeImages(p.images, p.userId, req),
+    }));
+
     res.json({
-      results,
+      results: normalizedResults,
       searchQuery,
       pagination: {
         currentPage: parseInt(page),
@@ -77,7 +95,7 @@ router.get('/search/broad', async (req, res) => {
   try {
     const skip = (parseInt(page) - 1) * parseInt(limit);
     
-    const results = await Product.find({
+  const results = await Product.find({
       $and: [
         {
           $or: [
@@ -112,8 +130,13 @@ router.get('/search/broad', async (req, res) => {
 
     const totalPages = Math.ceil(totalResults / parseInt(limit));
 
+    const normalizedResultsBroad = results.map(p => ({
+      ...p.toObject(),
+      images: normalizeImages(p.images, p.userId, req),
+    }));
+
     res.json({
-      results,
+      results: normalizedResultsBroad,
       searchQuery,
       searchType: 'broad',
       pagination: {

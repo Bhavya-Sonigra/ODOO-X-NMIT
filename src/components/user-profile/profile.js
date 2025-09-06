@@ -207,24 +207,9 @@ function Profile() {
                                             <div className='profile-user-post-wrapper'>
                                                 {products.map((product, index) => (
                                                     <div key={product._id} className='profile-product-item'>
-                                                        {Array.isArray(product.images) && product.images.length > 0 ? (
+                                                        {product.images.length > 0 && (
                                                             <div className='profile-post-img-wrapper' onClick={()=>openItem(product)}>
-                                                                <img
-                                                                    className='profile-post-img'
-                                                                    src={product.images[0]}
-                                                                    alt={product.title}
-                                                                    loading='lazy'
-                                                                    onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/400x300/e0e0e0/666666?text=Product+Image'; }}
-                                                                />
-                                                            </div>
-                                                        ) : (
-                                                            <div className='profile-post-img-wrapper' onClick={()=>openItem(product)}>
-                                                                <img
-                                                                    className='profile-post-img'
-                                                                    src={'https://via.placeholder.com/400x300/e0e0e0/666666?text=Product+Image'}
-                                                                    alt={product.title}
-                                                                    loading='lazy'
-                                                                />
+                                                                <img className='profile-post-img' src={product.images[0]} alt={product.title} loading='lazy' />
                                                             </div>
                                                         )}
                                                         <div className='profile-post-info-wrapper'>

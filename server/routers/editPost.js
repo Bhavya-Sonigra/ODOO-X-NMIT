@@ -8,6 +8,9 @@ const { authenticateToken, verifyOwnership } = require('../middleware/auth');
 const { validateProduct } = require('../middleware/ecofindValidation');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/imageUtils');
 
+// helper to compute base files URL per request
+const getFilesBaseUrl = (req) => `${req.protocol}://${req.get('host')}/files`;
+
 // Configure multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -78,23 +81,49 @@ router.put('/update-product/:productId', authenticateToken, verifyOwnership(Prod
             }
         }
         
-        // Handle new image uploads
+        // Handle new image uploads with Cloudinary if configured, else local fallback
         if (newImages.length > 0) {
-            const uploadPromises = newImages.map(file => 
-                uploadToCloudinary(file.path, `users-products/${product.userId}`)
+            const cloudinaryConfigured = Boolean(
+                process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET
             );
-            
-            const cloudinaryResults = await Promise.all(uploadPromises);
-            
-            // Add new images to the arrays
-            updatedImagesList = [
-                ...updatedImagesList, 
-                ...cloudinaryResults.map(result => result.url)
-            ];
-            updatedPublicIds = [
-                ...updatedPublicIds, 
-                ...cloudinaryResults.map(result => result.publicId)
-            ];
+
+            if (cloudinaryConfigured) {
+                try {
+                    const uploadPromises = newImages.map(file => 
+                        uploadToCloudinary(file.path, `users-products/${product.userId}`)
+                    );
+                    const cloudinaryResults = await Promise.all(uploadPromises);
+                    updatedImagesList = [
+                        ...updatedImagesList,
+                        ...cloudinaryResults.map(result => result.url)
+                    ];
+                    updatedPublicIds = [
+                        ...updatedPublicIds,
+                        ...cloudinaryResults.map(result => result.publicId)
+                    ];
+                } catch (err) {
+                    console.error('Cloudinary upload failed on edit, falling back to local URLs:', err.message);
+                    const BASE_URL = getFilesBaseUrl(req);
+                    updatedImagesList = [
+                        ...updatedImagesList,
+                        ...newImages.map(f => `${BASE_URL}/${product.userId}/${path.basename(f.path)}`.replace(/\\/g, '/'))
+                    ];
+                    updatedPublicIds = [
+                        ...updatedPublicIds,
+                        ...newImages.map(() => null)
+                    ];
+                }
+            } else {
+                const BASE_URL = getFilesBaseUrl(req);
+                updatedImagesList = [
+                    ...updatedImagesList,
+                    ...newImages.map(f => `${BASE_URL}/${product.userId}/${path.basename(f.path)}`.replace(/\\/g, '/'))
+                ];
+                updatedPublicIds = [
+                    ...updatedPublicIds,
+                    ...newImages.map(() => null)
+                ];
+            }
         }
         
         // Update the product
