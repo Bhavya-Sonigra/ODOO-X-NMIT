@@ -11,7 +11,31 @@ const socketContext = createContext(null);
 let socket;
 const getSocket = () => {
   if (!socket) {
-    socket = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:3001');
+    try {
+      socket = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:3001', {
+        timeout: 5000,
+        transports: ['websocket', 'polling'],
+        reconnection: true,
+        reconnectionAttempts: 3,
+        reconnectionDelay: 1000
+      });
+      
+      socket.on('connect', () => {
+        console.log('Socket connected successfully');
+      });
+      
+      socket.on('connect_error', (error) => {
+        console.log('Socket connection error:', error.message);
+        // Don't throw error, just log it
+      });
+      
+      socket.on('disconnect', (reason) => {
+        console.log('Socket disconnected:', reason);
+      });
+    } catch (error) {
+      console.error('Failed to initialize socket:', error);
+      return null;
+    }
   }
   return socket;
 };
@@ -39,12 +63,10 @@ const SocketContext = ({ children }) => {
   const [activeUsers, setActiveUsers] = useState([]);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && socket && socket.connected) {
       setCurrentUserId(user.userId);
-      if (socket) {
-        socket.emit('joinChat', user.userId);
-        socket.emit('activeUser', user.userId);
-      }
+      socket.emit('joinChat', user.userId);
+      socket.emit('activeUser', user.userId);
     }
 
   }, [isAuthenticated, user, socket]);

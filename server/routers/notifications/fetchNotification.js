@@ -8,10 +8,10 @@ router.get('/get-notifications/:userId', async (req, res) => {
     try {
       const userNotifications = await UserNotification.findOne({ currentId: userId });
       if (!userNotifications) {
-        return res.status(404).json({ error: 'No notifications found' });
+        return res.status(200).json([]); // Return empty array instead of 404
       }
   
-      res.status(200).json(userNotifications.notifications);
+      res.status(200).json(userNotifications.notifications || []);
     } catch (error) {
       console.error('Error fetching notifications:', error);
       res.status(500).json({ error: 'Server error' });

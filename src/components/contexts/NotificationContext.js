@@ -39,11 +39,20 @@ export const NotificationProvider = ({ children }) => {
     const fetchNotifications = async (userId) => {
         try {
             const response = await fetch(ApiService.notifications.getNotifications(userId));
+            if (!response.ok) {
+                console.error('Failed to fetch notifications:', response.status);
+                return;
+            }
             const data = await response.json();
-            setNotifications(data || []);
-            setUnreadCount(data.filter((notification) => !notification.isRead).length || 0);
+            
+            // Ensure data is an array before using filter
+            const notificationsArray = Array.isArray(data) ? data : [];
+            setNotifications(notificationsArray);
+            setUnreadCount(notificationsArray.filter((notification) => !notification.isRead).length || 0);
         } catch (error) {
             console.error('Error fetching notifications:', error);
+            setNotifications([]);
+            setUnreadCount(0);
         }
     };
     

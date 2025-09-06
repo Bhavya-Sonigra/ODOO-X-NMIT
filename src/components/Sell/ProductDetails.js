@@ -59,7 +59,7 @@ function ProductDetails() {
     const { notifySuccess, notifyError } = useToast();
     const position = [coordinates.lat, coordinates.lon];
     const [isUpdateLocation, setIsUpdateLocation] = useState(false);
-    const {isAuthenticated, user}=useAuth();
+    const {isAuthenticated, user, token}=useAuth();
 
     useEffect(() => {
         const handlePopState = (e) => {
@@ -205,14 +205,31 @@ function ProductDetails() {
         selectedImgFiles.forEach((file) => {
             formData.append('images', file);
         });
+
+        // Check if user is authenticated and has a token
+        console.log('Authentication check:', { isAuthenticated, token: !!token, userId: user?.userId });
+        
+        if (!token) {
+            console.error('No token available, redirecting to login');
+            notifyError('Please log in again to upload products');
+            setIsLoading(false);
+            navigate('/login');
+            return;
+        }
+
         try {
-            const authToken = localStorage.getItem('authToken');
+            console.log('Making request with token:', token.substring(0, 20) + '...');
+            
             const response = await fetch('http://localhost:5000/users/post/upload-product', {
                 method: 'POST',
-                headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : undefined,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 body: formData,
             });
 
+            console.log('Response status:', response.status);
+            
             if (response.ok) {
                 setIsLoading(false);
                 const result = await response.json();
@@ -221,9 +238,19 @@ function ProductDetails() {
                     navigate('/');
                 }, 1000)
             } else {
-                notifyError('Failed to upload product');
+                const errorData = await response.json();
+                console.error('Upload failed:', response.status, errorData);
+                
+                if (response.status === 401) {
+                    notifyError('Authentication failed. Please log in again.');
+                    // Clear stored auth data
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('userData');
+                    navigate('/login');
+                } else {
+                    notifyError(errorData.message || 'Failed to upload product');
+                }
                 setIsLoading(false);
-
             }
         } catch (error) {
             notifyError(error)

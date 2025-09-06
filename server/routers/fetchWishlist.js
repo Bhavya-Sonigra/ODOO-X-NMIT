@@ -10,7 +10,11 @@ router.get('/user-wishlist/:userId', async (req, res) => {
       const wishlist = await Wishlist.findOne({ userId: req.params.userId });
   
       if (!wishlist) {
-        return res.status(404).json({ message: 'Wishlist not found' });
+        return res.status(200).json({ 
+          userId: req.params.userId,
+          products: [],
+          message: 'Wishlist is empty' 
+        });
       }
       const productDetails = await Promise.all(
         wishlist.products.map(async (item) => {
