@@ -20,16 +20,28 @@ const authenticateToken = async (req, res, next) => {
             return res.status(401).json({ message: 'Access token required' });
         }
 
+        console.log('Attempting to verify token:', token);
+        
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key-here');
+        console.log('Decoded token:', decoded);
+        
+        if (!decoded.userId) {
+            console.log('No userId found in token');
+            return res.status(401).json({ message: 'Invalid token format' });
+        }
         
         // Verify user still exists
-        const user = await User.findOne({ userId: decoded.userId }).select('-password');
+        console.log('Looking for user with ID:', decoded.userId);
+        const user = await User.findById(decoded.userId).select('-password');
+        
         if (!user) {
+            console.log('User not found in database');
             return res.status(401).json({ message: 'User not found' });
         }
-
+        
+        console.log('User found:', user.name, user.userId);
         req.user = user;
-        req.userId = decoded.userId;
+        req.userId = user.userId; // Use the application's userId field
         next();
     } catch (error) {
         if (error.name === 'TokenExpiredError') {

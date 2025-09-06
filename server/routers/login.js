@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../Models/Users.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const salt = 10;
 const router = express.Router();
 
@@ -28,8 +29,21 @@ router.post('/login', async (req, res) => {
                         const UserInfo = {
                             ...user.toObject(),
                         };
-                         delete UserInfo.password;
-                        res.status(200).json({ msg: 'success', success: true, userData: UserInfo })
+                        delete UserInfo.password;
+                        
+                        // Generate JWT token
+                        const token = jwt.sign(
+                            { userId: user._id, email: user.email },
+                            process.env.JWT_SECRET || 'your-secret-key-here',
+                            { expiresIn: '24h' }
+                        );
+                        
+                        res.status(200).json({
+                            msg: 'success',
+                            success: true,
+                            userData: UserInfo,
+                            token: token
+                        })
                     }
                     else {
                         res.status(404).json({ msg: 'User not found in record !', success: false })
@@ -46,8 +60,21 @@ router.post('/login', async (req, res) => {
                     const UserInfo = {
                         ...user.toObject(),
                     };
-                    delete UserInfo.password; 
-                    res.status(200).json({ msg: 'Login Successful', success: true, userData: UserInfo })
+                    delete UserInfo.password;
+                    
+                    // Generate JWT token
+                    const token = jwt.sign(
+                        { userId: user._id, email: user.email },
+                        process.env.JWT_SECRET || 'your-secret-key-here',
+                        { expiresIn: '24h' }
+                    );
+                    
+                    res.status(200).json({
+                        msg: 'Login Successful',
+                        success: true,
+                        userData: UserInfo,
+                        token: token
+                    })
                 }
                 else {
                     res.status(404).json({ msg: 'Invalid email or password', success: false })

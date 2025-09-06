@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../Models/Users.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const salt = 10;
 
@@ -50,7 +51,19 @@ router.post('/register', async (req, res) => {
 
         const data = await newUser.save();
         const userData = await User.findById(data._id).select('-password');
-        res.status(201).json({ msg: 'success', userData });
+        
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: data._id, email: data.email },
+            process.env.JWT_SECRET || 'your-secret-key-here',
+            { expiresIn: '24h' }
+        );
+        
+        res.status(201).json({ 
+            msg: 'success', 
+            userData,
+            token: token
+        });
     } catch (err) {
         res.status(400).json({ msg: 'Error saving user', error: err });
     }

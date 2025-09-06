@@ -2,6 +2,7 @@ const express = require('express');
 const { OAuth2Client } = require('google-auth-library');
 const User = require('../Models/Users.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const salt = 10;
 
@@ -50,10 +51,18 @@ router.post('/google-login', async (req, res) => {
             };
             delete userInfo.password;
             
+            // Generate JWT token
+            const token = jwt.sign(
+                { userId: user._id, email: user.email },
+                process.env.JWT_SECRET || 'your-secret-key-here',
+                { expiresIn: '24h' }
+            );
+            
             res.status(200).json({ 
                 msg: 'Login successful', 
                 success: true, 
-                userData: userInfo 
+                userData: userInfo,
+                token: token
             });
         } else {
             res.status(404).json({ 
@@ -112,10 +121,18 @@ router.post('/google-register', async (req, res) => {
         const data = await newUser.save();
         const userData = await User.findById(data._id).select('-password');
         
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: data._id, email: data.email },
+            process.env.JWT_SECRET || 'your-secret-key-here',
+            { expiresIn: '24h' }
+        );
+        
         res.status(201).json({ 
             msg: 'success', 
             success: true,
-            userData 
+            userData,
+            token: token
         });
     } catch (error) {
         console.error('Google registration error:', error);
