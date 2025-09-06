@@ -9,32 +9,42 @@ import ApiService from '../../services/apiService';
 const socketContext = createContext(null);
 
 let socket;
+let connectionAttempts = 0;
+const MAX_CONNECTION_ATTEMPTS = 3;
+
 const getSocket = () => {
-  if (!socket) {
+  if (!socket && connectionAttempts < MAX_CONNECTION_ATTEMPTS) {
     try {
+      connectionAttempts++;
       socket = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:3001', {
         timeout: 5000,
         transports: ['websocket', 'polling'],
         reconnection: true,
         reconnectionAttempts: 3,
-        reconnectionDelay: 1000
+        reconnectionDelay: 1000,
+        autoConnect: true
       });
       
       socket.on('connect', () => {
         console.log('Socket connected successfully');
+        connectionAttempts = 0; // Reset on successful connection
       });
       
       socket.on('connect_error', (error) => {
-        console.log('Socket connection error:', error.message);
-        // Don't throw error, just log it
+        console.warn('Chat server unavailable. Some features may be limited.');
+        // Don't log the full error to avoid console spam
+        if (connectionAttempts >= MAX_CONNECTION_ATTEMPTS) {
+          console.log('Max connection attempts reached. Chat features will be disabled.');
+          socket = null;
+        }
       });
       
       socket.on('disconnect', (reason) => {
-        console.log('Socket disconnected:', reason);
+        console.log('Chat disconnected:', reason);
       });
     } catch (error) {
-      console.error('Failed to initialize socket:', error);
-      return null;
+      console.warn('Chat server unavailable. Chat features will be disabled.');
+      socket = null;
     }
   }
   return socket;
@@ -51,6 +61,7 @@ const SocketContext = ({ children }) => {
   const [chatId, setChatId] = useState(null);
   const [isRequesting, setIsRequesting] = useState(false);
   const [currentUserId, setCurrentUserId] = useState();
+  const [isChatAvailable, setIsChatAvailable] = useState(false);
   const { notifySuccess, notifyError, notifyWarning } = useToast();
   const [isCallbackRequest, setIsCallBackRequest] = useState(false);
   const [isUserBlocked, setIsUserBlocked] = useState(false);
@@ -65,8 +76,12 @@ const SocketContext = ({ children }) => {
   useEffect(() => {
     if (isAuthenticated && socket && socket.connected) {
       setCurrentUserId(user.userId);
+      setIsChatAvailable(true);
       socket.emit('joinChat', user.userId);
       socket.emit('activeUser', user.userId);
+    } else if (isAuthenticated && !socket) {
+      setIsChatAvailable(false);
+      console.log('Chat features unavailable - server not running');
     }
 
   }, [isAuthenticated, user, socket]);
@@ -127,7 +142,7 @@ const SocketContext = ({ children }) => {
 
 
   const sendMessage = async (peerId, message, fileUrl, productUrl) => {
-    if (socket) {
+    if (socket && socket.connected) {
       socket.emit('privateMessage', {
         senderId: user.userId,
         receiverId: peerId,
@@ -135,6 +150,8 @@ const SocketContext = ({ children }) => {
         fileUrl,
         productUrl,
       });
+    } else {
+      notifyWarning('Chat is currently unavailable. Please try again later.');
     }
   };
 
@@ -408,7 +425,8 @@ const SocketContext = ({ children }) => {
         markMessagesAsSeen,
         setChatList,
         totalUnseenMsgCount,
-        activeUsers
+        activeUsers,
+        isChatAvailable
       }}
     >
       {children}

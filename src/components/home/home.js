@@ -205,7 +205,7 @@ function Home() {
                         <span className='categories-item-title'>All</span>
                     </div>
 
-                    <div className={`categories-item e-category ${filterCategory === 'Electronics' ? 'active' : ''}`}>
+                    <div className={`categories-item e-category ${filterCategory === 'Electronics' ? 'active' : ''}`} onClick={() => setFilterCategory('Electronics')}>
                         {/* <MdOutlineDevicesOther className='categories-item-logo' /> */}
                         <span className='categories-item-title'>Electronics</span>
                         <LiaAngleDownSolid className='h-down-angle-icon' />
@@ -233,7 +233,7 @@ function Home() {
                                 <PiDesktopTower className='ce-icon' />
                                 <span className='ce-text'>Monitors</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === '#0066FFtooth Headphones' ? 'active' : ''}`} onClick={() => setFilterCategory('Bluetooth Headphones')}>
+                            <div className={`ce-item ${filterCategory === 'Bluetooth Headphones' ? 'active' : ''}`} onClick={() => setFilterCategory('Bluetooth Headphones')}>
                                 <GiHeadphones className='ce-icon' />
                                 <span className='ce-text'>Bluetooth Headphones</span>
                             </div>
@@ -251,15 +251,15 @@ function Home() {
                                 <CiDesktopMouse2 className='ce-icon' />
                                 <span className='ce-text'>Mouse</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'Keyboard' ? 'active' : ''}`} onClick={() => setFilterCategory('Keybord')}>
+                            <div className={`ce-item ${filterCategory === 'Keyboard' ? 'active' : ''}`} onClick={() => setFilterCategory('Keyboard')}>
                                 <BsKeyboard className='ce-icon' />
                                 <span className='ce-text'>Keyboard</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'Camera and Lenses' ? 'active' : ''}`} onClick={() => setFilterCategory('Camera')}>
+                            <div className={`ce-item ${filterCategory === 'Camera' ? 'active' : ''}`} onClick={() => setFilterCategory('Camera')}>
                                 <GiPhotoCamera className='ce-icon' />
                                 <span className='ce-text'>Camera and Lenses</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'Smart Watch' ? 'active' : ''}`} onClick={() => setFilterCategory('SmartWatch')}>
+                            <div className={`ce-item ${filterCategory === 'Smart Watch' ? 'active' : ''}`} onClick={() => setFilterCategory('Smart Watch')}>
                                 <BsSmartwatch className='ce-icon' />
                                 <span className='ce-text'>Smart Watch</span>
                             </div>
@@ -271,21 +271,21 @@ function Home() {
                         </div>
                     </div>
 
-                    <div className={`categories-item hp-category  ${filterCategory === 'Home Appliances' ? 'active' : ''}`}  >
+                    <div className={`categories-item hp-category  ${filterCategory === 'Home Appliances' ? 'active' : ''}`} onClick={() => setFilterCategory('Home Appliances')}>
                         {/* <PiWashingMachineThin className='categories-item-logo' /> */}
                         <span className='categories-item-title'>Home Appliances</span>
                         <LiaAngleDownSolid className='h-down-angle-icon' />
                         <div className='c-home-appliances-options-wrapper'>
                             <div className='ec-triangle-ui'></div>
-                            <div className={`ce-item ${filterCategory === 'ACs' ? 'active' : ''}`} onClick={() => setFilterCategory('Ac')}>
+                            <div className={`ce-item ${filterCategory === 'AC' ? 'active' : ''}`} onClick={() => setFilterCategory('AC')}>
                                 <TbAirConditioning className='ce-icon' />
                                 <span className='ce-text'>ACs</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'Televison' ? 'active' : ''}`} onClick={() => setFilterCategory('Televison')}>
+                            <div className={`ce-item ${filterCategory === 'Television' ? 'active' : ''}`} onClick={() => setFilterCategory('Television')}>
                                 <MdOutlineLiveTv className='ce-icon' />
                                 <span className='ce-text'>Televison</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'Washing Machine' ? 'active' : ''}`} onClick={() => setFilterCategory('Washingmachine')}>
+                            <div className={`ce-item ${filterCategory === 'Washing Machine' ? 'active' : ''}`} onClick={() => setFilterCategory('Washing Machine')}>
                                 <PiWashingMachine className='ce-icon' />
                                 <span className='ce-text'>Washing Machine</span>
                             </div>
@@ -293,11 +293,11 @@ function Home() {
                                 <GiCooler className='ce-icon' />
                                 <span className='ce-text'>Cooler</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'Fridges' ? 'active' : ''}`} onClick={() => setFilterCategory('Fridges')}>
+                            <div className={`ce-item ${filterCategory === 'Fridge' ? 'active' : ''}`} onClick={() => setFilterCategory('Fridge')}>
                                 <BiFridge className='ce-icon' />
                                 <span className='ce-text'>Fridges</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'Mixer Grinder' ? 'active' : ''}`} onClick={() => setFilterCategory('MixerGrinder')}>
+                            <div className={`ce-item ${filterCategory === 'Mixer Grinder' ? 'active' : ''}`} onClick={() => setFilterCategory('Mixer Grinder')}>
                                 <GiManualMeatGrinder className='ce-icon' />
                                 <span className='ce-text'>Mixer Grinder</span>
                             </div>
@@ -309,7 +309,7 @@ function Home() {
                                 <CiClock2 className='ce-icon' />
                                 <span className='ce-text'>Clock</span>
                             </div>
-                            <div className={`ce-item  ${filterCategory === 'Furnitures' ? 'active' : ''}`} onClick={() => setFilterCategory('Furnitures')}>
+                            <div className={`ce-item  ${filterCategory === 'Furniture' ? 'active' : ''}`} onClick={() => setFilterCategory('Furniture')}>
                                 <GiRockingChair className='ce-icon' />
                                 <span className='ce-text'>Furnitures</span>
                             </div>
@@ -318,17 +318,17 @@ function Home() {
                     </div>
 
 
-                    <div className='categories-item v-catrgory' >
+                    <div className={`categories-item v-catrgory ${filterCategory === 'Vehicles' ? 'active' : ''}`} onClick={() => setFilterCategory('Vehicles')}>
                         {/* <TbSteeringWheel className='categories-item-logo' /> */}
                         <span className='categories-item-title'>Vehicles</span>
                         <LiaAngleDownSolid className='h-down-angle-icon' />
                         <div className='c-vehicles-options-wrapper'>
                             <div className='ec-triangle-ui'></div>
-                            <div className={`ce-item ${filterCategory === 'Cars' ? 'active' : ''}`} onClick={() => setFilterCategory('Cars')}>
+                            <div className={`ce-item ${filterCategory === 'Car' ? 'active' : ''}`} onClick={() => setFilterCategory('Car')}>
                                 <IoCarSportOutline className='ce-icon' />
                                 <span className='ce-text'>Cars</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'MotorCycle' ? 'active' : ''}`} onClick={() => setFilterCategory('MotorCycle')}>
+                            <div className={`ce-item ${filterCategory === 'Motorcycle' ? 'active' : ''}`} onClick={() => setFilterCategory('Motorcycle')}>
                                 <PiMotorcycleFill className='ce-icon' />
                                 <span className='ce-text'>MotorCycle</span>
                             </div>
@@ -336,7 +336,7 @@ function Home() {
                                 <IoBicycleOutline className='ce-icon' />
                                 <span className='ce-text'>Bicycle</span>
                             </div>
-                            <div className={`ce-item ${filterCategory === 'Other 4 Wheeler' ? 'active' : ''}`} onClick={() => setFilterCategory('wheeler')}>
+                            <div className={`ce-item ${filterCategory === 'Other Vehicles' ? 'active' : ''}`} onClick={() => setFilterCategory('Other Vehicles')}>
                                 <BiBus className='ce-icon' />
                                 <span className='ce-text'>Other 4 Wheeler</span>
                             </div>
