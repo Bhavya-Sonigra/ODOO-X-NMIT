@@ -1,116 +1,142 @@
-🌍 ODOO X NMIT – EcoFinds Marketplace
+# EcoFinds Marketplace – ODOO X NMIT
 
-A sustainable marketplace platform where users can buy, sell, and donate pre-owned items such as furniture, appliances, and other goods — helping promote reusability and reduce waste.
+A sustainable marketplace platform for buying, selling, and donating pre-owned items (furniture, appliances, books, study materials, and more). Built for the Odoo Hackathon X NMIT.
 
-This project was built as part of the Odoo Hackathon X NMIT.
+## Features
 
-✨ Features
+- **User Authentication:** Register, login, and manage accounts.
+- **Product Listings:** Add, update, and browse items with images, details, and condition.
+- **Buy / Sell Flow:** Post products, view seller details, and interact.
+- **Search & Filter:** Find items by category, condition, or location.
+- **Favorite Sellers:** Save and add notes for favorite sellers.
+- **Wishlist:** Add/remove products to your wishlist.
+- **Chat & Messaging:** Real-time chat between buyers and sellers.
+- **Notifications:** Receive and manage notifications.
+- **Responsive Frontend:** Mobile-friendly UI.
+- **REST APIs:** Node.js/Express backend for marketplace operations.
 
-🔑 User Authentication – Register, login, and manage accounts.
+## Tech Stack
 
-🛒 Product Listings – Add, update, and browse items with details, images, and conditions (used/new).
+**Frontend:**  
+- React (JavaScript)  
+- CSS
 
-📦 Buy / Sell Flow – Post products, view seller details, and interact.
+**Backend:**  
+- Node.js  
+- Express.js
 
-🔍 Search & Filter – Quickly find items by category, condition, or location.
+**Database:**  
+- MongoDB
 
-📱 Responsive Frontend – Simple, mobile-friendly UI.
+## Project Structure
 
-⚡ REST APIs – Backend powered by Node.js/Express with endpoints for marketplace operations.
+```
+ODOO-X-NMIT/
+│── public/                # Static assets (favicon, index.html, manifest, robots.txt)
+│── server/                # Backend (Node.js + Express APIs)
+│   │── .env
+│   │── chatServer.js
+│   │── nodemon.json
+│   │── package.json
+│   │── server.js
+│   │── middleware/
+│   │── Models/
+│   │── routers/
+│   │── services/
+│   │── Users-files/
+│   │── utils/
+│── src/                   # Frontend (React components)
+│   │── App.js, App.css
+│   │── index.js, index.css
+│   │── Loader.js, Loader.css
+│   │── logo.svg
+│   │── reportWebVitals.js
+│   │── ScrollToTop.js
+│   │── setupTests.js
+│   │── assets/
+│   │── auth/
+│   │── components/
+│   │── services/
+│── .env                   # Environment variables
+│── .gitignore
+│── EcoFinds-API.postman_collection.json
+│── package.json
+│── README.md
+```
 
-🧪 Postman Collection – API collection included (EcoFinds-API.postman_collection.json) for testing.
+## Getting Started
 
-🛠️ Tech Stack
+### 1. Clone the Repository
 
-Frontend
-
-React (JavaScript)
-
-CSS
-
-Backend
-
-Node.js
-
-Express.js
-
-Database
-
-MongoDB (assumed – please update if different)
-
-Other Tools
-
-Postman for API testing
-
-Git/GitHub for collaboration
-
-🚀 Getting Started
-1️⃣ Clone the Repository
+```sh
 git clone https://github.com/Bhavya-Sonigra/ODOO-X-NMIT.git
 cd ODOO-X-NMIT
+```
 
-2️⃣ Install Dependencies
+### 2. Install Dependencies
+
+```sh
 npm install
+```
 
-3️⃣ Setup Environment Variables
+### 3. Setup Environment Variables
 
-Create a .env file in the root directory with:
+Create a `.env` file in the root directory:
 
+```
 PORT=5000
 MONGO_URI=your_mongo_connection_string
 JWT_SECRET=your_secret_key
+```
 
-4️⃣ Run the Application
-Backend (Server)
+### 4. Run the Application
+
+**Backend (Server):**
+```sh
 cd server
 npm install
 npm start
+```
 
-Frontend (React App)
+**Frontend (React App):**
+```sh
 cd src
 npm install
 npm start
+```
 
+- Frontend: http://localhost:3000  
+- Backend: http://localhost:5000/api
 
-The app will be available at:
+## API Documentation
 
-Frontend → http://localhost:3000
+A Postman collection is included for testing backend endpoints:  
+**File:** `EcoFinds-API.postman_collection.json`
 
-Backend → http://localhost:5000/api
+## Team
 
-📖 API Documentation
+- Bhavya Sonigra
+- Nemin Haria
+- Jay Dolar
+- Parthiv Panchal
 
-A Postman collection is included for testing all backend endpoints:
+## Hackathon Track
 
-File: EcoFinds-API.postman_collection.json
+Built for Odoo Hackathon X NMIT 2025 – Problem Statement:  
+Develop a sustainable marketplace platform to encourage reuse and reduce waste.
 
-📂 Project Structure
-ODOO-X-NMIT/
-│── public/             # Static assets
-│── server/             # Backend (Node.js + Express APIs)
-│── src/                # Frontend (React components)
-│── .env.example        # Environment variable sample
-│── package.json        # Dependencies and scripts
-│── EcoFinds-API.postman_collection.json
-│── README.md           # Project documentation
+## Future Improvements
 
-👥 Team
+- Integration with Odoo modules (invoicing, inventory)
+- Enhanced chat/messaging features
+- Image recognition for auto-categorization
 
-Bhavya Sonigra
-Nemin Haria
-Jay Dolar
-Parthiv Panchal
+---
 
-🏆 Hackathon Track
+**Other Tools:**  
+- Postman for API testing  
+- Git/GitHub for collaboration
 
-Built for Odoo Hackathon X NMIT 2025 – Problem Statement:
+---
 
-Develop a sustainable marketplace platform where users can exchange goods, encouraging reuse and reducing waste.
-
-📌 Future Improvements
-
-Integration with Odoo modules (e.g., invoicing, inventory).
-
-Add chat or messaging between buyers & sellers.
-
-Add image recognition to auto-categorize items.
+For any issues or contributions, please open an issue or submit a pull request!
