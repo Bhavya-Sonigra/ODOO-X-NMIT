@@ -2,20 +2,50 @@ const nodemailer = require('nodemailer');
 
 class EmailService {
     constructor() {
+        // Check if email credentials are available
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+            console.warn('Warning: Email credentials not found in environment variables');
+            this.transporter = null;
+            return;
+        }
+
         this.transporter = nodemailer.createTransport({
             service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false, // true for 465, false for other ports
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
             },
+            tls: {
+                rejectUnauthorized: false
+            }
         });
+
+        // Verify the connection
+        this.verifyConnection();
+    }
+
+    async verifyConnection() {
+        if (!this.transporter) {
+            console.log('Email service not initialized due to missing credentials');
+            return;
+        }
+
+        try {
+            await this.transporter.verify();
+            console.log('Email service is ready to send emails');
+        } catch (error) {
+            console.error('Email service verification failed:', error.message);
+        }
     }
 
     async sendOTP(userName, userEmail, otp) {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: userEmail,
-            subject: 'Email Verification - ODOOXNMIT',
+            subject: 'Email Verification - EcoFinds',
             html: this.getOTPTemplate(userName, otp, 'Email Verification', 'Thank you for signing up! Please use the following OTP to verify your email.')
         };
 
@@ -26,7 +56,7 @@ class EmailService {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: userEmail,
-            subject: 'Password Reset - ODOOXNMIT',
+            subject: 'Password Reset - EcoFinds',
             html: this.getOTPTemplate('User', otp, 'Password Reset Verification', 'You have requested to reset your password. Please use the following OTP to verify your identity.')
         };
 
@@ -37,7 +67,7 @@ class EmailService {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: userEmail,
-            subject: 'Callback Request - ODOOXNMIT',
+            subject: 'Callback Request - EcoFinds',
             html: this.getCallbackTemplate(sellerName, buyerName, productTitle)
         };
 
@@ -45,6 +75,12 @@ class EmailService {
     }
 
     async sendMail(mailOptions) {
+        if (!this.transporter) {
+            const error = 'Email service not available - missing credentials';
+            console.error('Error sending email:', error);
+            return { success: false, error, message: 'Email service not configured' };
+        }
+
         try {
             const result = await this.transporter.sendMail(mailOptions);
             console.log('Email sent successfully:', result.messageId);
@@ -129,7 +165,7 @@ class EmailService {
       </div>
       <div class="footer">
           <p>If you didn't request this, please ignore this email or contact support.</p>
-          <p>&copy; 2024 ODOOXNMIT Resale Marketplace. All rights reserved.</p>
+          <p>&copy; 2024 EcoFinds Resale Marketplace. All rights reserved.</p>
       </div>
   </div>
 </body>
@@ -203,10 +239,10 @@ class EmailService {
               <strong>Product:</strong> ${productTitle}
           </div>
           <p>The buyer is interested in your product and would like you to contact them back. Please reach out to them as soon as possible.</p>
-          <p>Thank you for using ODOOXNMIT!</p>
+          <p>Thank you for using EcoFinds!</p>
       </div>
       <div class="footer">
-          <p>&copy; 2024 ODOOXNMIT Resale Marketplace. All rights reserved.</p>
+          <p>&copy; 2024 EcoFinds Resale Marketplace. All rights reserved.</p>
       </div>
   </div>
 </body>

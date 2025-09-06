@@ -1,3 +1,7 @@
+// Load environment variables first, before any other imports
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -25,14 +29,10 @@ const updateUsers=require('./routers/updateUser.js');
 const search=require('./routers/search.js');
 const markedAsRead=require('./routers/notifications/markReadNotification.js');
 
-// New EcoFinds routes
 const cart = require('./routers/cart.js');
 const orders = require('./routers/orders.js');
 const userProfile = require('./routers/userProfile.js');
 const categories = require('./routers/categories.js');
-
-const dotenv = require('dotenv');
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
