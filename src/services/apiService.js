@@ -54,6 +54,62 @@ class ApiService {
             `${API_BASE_URL}/users/notifications/markAsRead/${userId}/${notificationId}`,
     };
 
+    // Cart endpoints
+    static cart = {
+        getCart: (userId) => `${API_BASE_URL}/api/cart?userId=${userId}`,
+        addItem: () => `${API_BASE_URL}/api/cart/items`,
+        updateItem: (itemId) => `${API_BASE_URL}/api/cart/items/${itemId}`,
+        removeItem: (itemId) => `${API_BASE_URL}/api/cart/items/${itemId}`,
+        clearCart: (userId) => `${API_BASE_URL}/api/cart?userId=${userId}`,
+    };
+
+    // Orders endpoints
+    static orders = {
+        createOrder: () => `${API_BASE_URL}/api/orders`,
+        getUserOrders: (userId) => `${API_BASE_URL}/api/orders?userId=${userId}`,
+        getOrder: (orderId) => `${API_BASE_URL}/api/orders/${orderId}`,
+        updatePayment: (orderId) => `${API_BASE_URL}/api/orders/${orderId}/payment`,
+    };
+
+    // Saved Searches endpoints
+    static savedSearches = {
+        getSavedSearches: () => `${API_BASE_URL}/api/saved-searches`,
+        createSavedSearch: () => `${API_BASE_URL}/api/saved-searches`,
+        updateSavedSearch: (searchId) => `${API_BASE_URL}/api/saved-searches/${searchId}`,
+        deleteSavedSearch: (searchId) => `${API_BASE_URL}/api/saved-searches/${searchId}`,
+    };
+
+    // Favorite Sellers endpoints
+    static favoriteSellers = {
+        getFavorites: () => `${API_BASE_URL}/api/favorites/sellers`,
+        addFavorite: () => `${API_BASE_URL}/api/favorites/sellers`,
+        removeFavorite: (sellerId) => `${API_BASE_URL}/api/favorites/sellers/${sellerId}`,
+        updateNotes: (sellerId) => `${API_BASE_URL}/api/favorites/sellers/${sellerId}/notes`,
+    };
+
+    // Categories endpoints
+    static categories = {
+        getCategories: (includeCounts = false) => `${API_BASE_URL}/api/categories${includeCounts ? '?includeCounts=true' : ''}`,
+        getCategoryProducts: (category, page = 1, limit = 20, lat, lng, distance = 10000) => 
+            `${API_BASE_URL}/api/categories/${encodeURIComponent(category)}/products?page=${page}&limit=${limit}&lat=${lat}&lng=${lng}&distance=${distance}`,
+    };
+
+    // Enhanced Chat endpoints (Chat Server - port 3001)
+    static chat = {
+        getBlockedUsers: (userId) => `http://localhost:3001/users/auth/blocked-users/${userId}`,
+        blockUser: (userId) => `http://localhost:3001/users/auth/block-user/${userId}`,
+        getChatList: (userId) => `http://localhost:3001/users/chatlists/chat-list/${userId}`,
+        markSeen: (chatId) => `http://localhost:3001/users/chats/mark-seen/${chatId}`,
+        deleteChat: (chatId) => `http://localhost:3001/users/chats/delete-chat/${chatId}`,
+        deleteMessage: (messageId) => `http://localhost:3001/users/chats/delete-message/${messageId}`,
+    };
+
+    // Enhanced User Profile endpoints
+    static userProfile = {
+        getProfile: (userId) => `${API_BASE_URL}/api/user/profile/${userId}`,
+        updateProfile: (userId) => `${API_BASE_URL}/api/user/profile/${userId}`,
+    };
+
     // Other endpoints
     static other = {
         sendCallbackRequest: () => `${API_BASE_URL}/users/send-call-back-request`,

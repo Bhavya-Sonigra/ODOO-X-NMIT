@@ -14,6 +14,7 @@ import { ReactComponent as NoProductFound } from '../../assets/SVG/no-post.svg';
 import { CiChat2, CiLocationOn } from "react-icons/ci";
 import AuthPopup from '../../auth/authPopup'
 import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
 import { useToast } from '../contexts/ToastService';
 import { ClipLoader } from 'react-spinners';
 import { useAuth } from '../contexts/AuthContext';
@@ -24,6 +25,7 @@ const Item = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { fetchWishlist, wishlist, handleRemove } = useWishlist();
+    const { addToCart } = useCart();
     const productId = url.split('-pid-')[1];
     const [productItem, setProductItem] = useState({});
     const { notifyError, notifySuccess, notifyWarning } = useToast();
@@ -184,6 +186,38 @@ const Item = () => {
     const checkWishList = (productItem) => {
         return wishlist.some(status => status.productId === productItem.productId);
     }
+
+    const handleAddToCart = async () => {
+        if (!isAuthenticated) {
+            setAuthPopup(true);
+            return;
+        }
+
+        if (productItem.productStatus?.isSold) {
+            notifyError('This product is no longer available');
+            return;
+        }
+
+        if (user.userId === productItem.userId) {
+            notifyWarning('You cannot add your own product to cart');
+            return;
+        }
+
+        try {
+            await addToCart({
+                productId: productItem.productId,
+                title: productItem.title,
+                price: productItem.price,
+                image: productItem.images?.[0] || '',
+                sellerId: productItem.userId,
+                sellerName: postedUser.name || 'Unknown Seller'
+            });
+            notifySuccess('Product added to cart!');
+        } catch (error) {
+            notifyError('Failed to add product to cart');
+        }
+    };
+
     const handleAuthPopup = (closePopup) => {
         setAuthPopup(closePopup);
     }
@@ -352,6 +386,19 @@ const Item = () => {
 
                             </div>
                         </div>
+
+                        {/* Add to Cart Button */}
+                        {user.userId !== productItem.userId && !productItem.productStatus?.isSold && (
+                            <div className="item-viewer-cart-actions">
+                                <button 
+                                    className="add-to-cart-btn" 
+                                    onClick={handleAddToCart}
+                                    disabled={!isAuthenticated}
+                                >
+                                    🛒 Add to Cart
+                                </button>
+                            </div>
+                        )}
                         <div className="item-viewer-product-title-location-wrapper">
                             <span className="item-viewer-product-title">{productItem.title}</span>
                             <div className="item-viewer-product-location-date-wrapper">

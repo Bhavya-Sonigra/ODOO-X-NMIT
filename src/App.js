@@ -13,10 +13,18 @@ import ProductDetails from './components/Sell/ProductDetails';
 import ProfileWrapper from './components/user-profile/profile-wrapper';
 import Profile from './components/user-profile/profile';
 import Wishlist from './components/user-profile/wishlist';
+import Cart from './components/cart/Cart';
+import Orders from './components/orders/Orders';
+import SavedSearches from './components/saved-searches/SavedSearches';
+import FavoriteSellers from './components/favorite-sellers/FavoriteSellers';
+import Categories from './components/categories/Categories';
 import { ReactComponent as EnableLocationSvg } from './assets/SVG/enable-location.svg'
 import { ClipLoader } from 'react-spinners';
 import { ToastContainer } from 'react-toastify';
 import { useLocation } from './components/contexts/LocationContext';
+import { CartProvider } from './components/contexts/CartContext';
+import { OrdersProvider } from './components/contexts/OrdersContext';
+import { EnhancedChatProvider } from './components/contexts/EnhancedChatContext';
 import Loader from './Loader';
 import Item from './components/Item-viewer/item';
 import EditPost from './components/user-profile/edit-post/edit-post';
@@ -24,7 +32,7 @@ import EditProfile from './components/user-profile/edit-profile';
 import Search from './components/search/search'
 import ScrollToTop from "./ScrollToTop";
 function App() {
-  const {error, isLoading, handleRetry,setCurrentLocation,setCoordinates,fetchLocation } = useLocation();
+  const {error, isLoading, handleRetry } = useLocation();
   const[isAppLoading, setIsAppLoading]=useState(true);
 
   useEffect(()=>{
@@ -34,20 +42,28 @@ function App() {
   },[])
 
   return (
-    <Router>
-      <div className="App">
-      <ScrollToTop />
-        <ToastContainer />
-        {isAppLoading ? (
-          <Loader />
-        ) : (
-          <>
-        <Routes>
-          <Route path="/" element={<Wrapper />} >
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<Search />} />
-            <Route path='/item/:url' element={<Item/>}/>
-            <Route path="/account" element={<ProfileWrapper />}>
+    <CartProvider>
+      <OrdersProvider>
+        <EnhancedChatProvider>
+          <Router>
+            <div className="App">
+            <ScrollToTop />
+              <ToastContainer />
+              {isAppLoading ? (
+                <Loader />
+              ) : (
+                <>
+              <Routes>
+                <Route path="/" element={<Wrapper />} >
+                  <Route path="/" element={<Home />} />
+                  <Route path="/search" element={<Search />} />
+                  <Route path='/item/:url' element={<Item/>}/>
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/orders" element={<Orders />} />
+                  <Route path="/saved-searches" element={<SavedSearches />} />
+                  <Route path="/favorite-sellers" element={<FavoriteSellers />} />
+                  <Route path="/categories" element={<Categories />} />
+                  <Route path="/account" element={<ProfileWrapper />}>
               <Route index element={<Profile />} />
               <Route path='profile' element={<Profile />} />
               <Route path="wishlist" element={<Wishlist />} />
@@ -76,8 +92,11 @@ function App() {
         )}
         </>
         )}
-      </div>
-    </Router>
+            </div>
+          </Router>
+        </EnhancedChatProvider>
+      </OrdersProvider>
+    </CartProvider>
   );
 }
 

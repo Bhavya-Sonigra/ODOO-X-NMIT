@@ -9,6 +9,7 @@ import { BiMessageRounded, BiUser } from "react-icons/bi";
 import { VscAdd } from "react-icons/vsc";
 import { GoBell } from "react-icons/go";
 import { LuUser2 } from "react-icons/lu";
+import { FiShoppingCart } from "react-icons/fi";
 import BeatLoader from "react-spinners/BeatLoader";
 import { IoClose } from "react-icons/io5";
 import logo from '../../assets/icon/e-logo.jpg'
@@ -17,11 +18,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { IoMdHeartEmpty } from "react-icons/io";
 import UpdateLocation from '../UpdateLocation/UpdateLocation';
 import AuthPopup from '../../auth/authPopup'
+import Cart from '../cart/Cart';
 import { useSocket } from '../contexts/SocketContext';
 import { NotificationContext } from '../contexts/NotificationContext';
 import { useWishlist } from '../contexts/WishlistContext';
 import { useLocation } from '../contexts/LocationContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
 import { LiaUserEditSolid } from "react-icons/lia";
 import { AiOutlineLogout, AiOutlineProduct } from "react-icons/ai";
 import { MdOutlineEditLocation } from "react-icons/md";
@@ -29,6 +32,7 @@ import { RiApps2AddLine } from "react-icons/ri";
 function Header() {
     const [isSearchVisible, setIsSearchVisible] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [showCart, setShowCart] = useState(false);
     const menuRef = useRef(null);
     const profileRef = useRef(null);
     const navigate = useNavigate();
@@ -39,6 +43,7 @@ function Header() {
     const { wishlistCount } = useWishlist();
     const { currentLocation } = useLocation();
     const { user, isAuthenticated, setAuthenticated } = useAuth();
+    const { itemCount } = useCart();
     const [searchQuery, setSearchQuery] = useState('');
 
 
@@ -46,13 +51,6 @@ function Header() {
         setIsUpdateLocation(isCancled);
 
     }
-    const addPost = () => {
-        if (isAuthenticated) {
-            navigate('/sell/product-details');
-        } else {
-            setAuthPopup(true)
-        }
-    };
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -81,9 +79,6 @@ function Header() {
     };
 
 
-    const gotHome = () => {
-        navigate('/');
-    };
 
 
     const logOut = async () => {
@@ -99,13 +94,6 @@ function Header() {
     }
     const handleAuthPopup = (closePopup) => {
         setAuthPopup(closePopup);
-    }
-    const openChats = () => {
-        if (isAuthenticated) {
-            navigate('/chat');
-        } else {
-            setAuthPopup(true)
-        }
     }
 
 
@@ -175,6 +163,36 @@ function Header() {
                     </div>
                 </div>
                
+                {/* Cart Icon */}
+                {isAuthenticated && (
+                    <div className='cart-icon-container' onClick={() => setShowCart(true)}>
+                        <FiShoppingCart className='icon cart-icon' />
+                        {itemCount > 0 && (
+                            <span className='cart-badge'>{itemCount}</span>
+                        )}
+                    </div>
+                )}
+
+                {/* Wishlist Icon */}
+                {isAuthenticated && (
+                    <div className='wishlist-icon-container' onClick={() => navigate('/wishlist')}>
+                        <IoMdHeartEmpty className='icon wishlist-icon' />
+                        {wishlistCount > 0 && (
+                            <span className='wishlist-badge'>{wishlistCount}</span>
+                        )}
+                    </div>
+                )}
+
+                {/* Notifications Icon */}
+                {isAuthenticated && (
+                    <div className='notification-icon-container' onClick={() => navigate('/notifications')}>
+                        <GoBell className='icon notification-icon' />
+                        {unreadCount > 0 && (
+                            <span className='notification-badge'>{unreadCount}</span>
+                        )}
+                    </div>
+                )}
+               
                 <div>
                     {isAuthenticated ? (
                         <div className="authenticated-user-profile ">
@@ -203,19 +221,35 @@ function Header() {
                                         }}>See profile</span>
                                 </div>
                                 <div className='menu-items-wrapper'>
-                                    <div className='menu-item' onClick={() => { { navigate('/account'); handleProfileClick(); } }}>
+                                    <div className='menu-item' onClick={() => { navigate('/account'); handleProfileClick(); }}>
                                         <BiUser className='menu-icon' />
-                                        <span className='menu-title'>Acount</span>
+                                        <span className='menu-title'>Account</span>
                                     </div>
-                                    <div className='menu-item' onClick={() => { { navigate('/account/profile'); handleProfileClick(); } }}>
+                                    <div className='menu-item' onClick={() => { navigate('/account/profile'); handleProfileClick(); }}>
                                         <AiOutlineProduct className='menu-icon' />
                                         <span className='menu-title'>My post</span>
                                     </div>
-                                    <div className='menu-item' onClick={() => { { navigate('/account/edit-profile'); handleProfileClick(); } }}>
+                                    <div className='menu-item' onClick={() => { navigate('/orders'); handleProfileClick(); }}>
+                                        <RiApps2AddLine className='menu-icon' />
+                                        <span className='menu-title'>My Orders</span>
+                                    </div>
+                                    <div className='menu-item' onClick={() => { navigate('/saved-searches'); handleProfileClick(); }}>
+                                        <CiSearch className='menu-icon' />
+                                        <span className='menu-title'>Saved Searches</span>
+                                    </div>
+                                    <div className='menu-item' onClick={() => { navigate('/favorite-sellers'); handleProfileClick(); }}>
+                                        <IoMdHeartEmpty className='menu-icon' />
+                                        <span className='menu-title'>Favorite Sellers</span>
+                                    </div>
+                                    <div className='menu-item' onClick={() => { navigate('/categories'); handleProfileClick(); }}>
+                                        <VscAdd className='menu-icon' />
+                                        <span className='menu-title'>Browse Categories</span>
+                                    </div>
+                                    <div className='menu-item' onClick={() => { navigate('/account/edit-profile'); handleProfileClick(); }}>
                                         <LiaUserEditSolid className='menu-icon' />
                                         <span className='menu-title'>Edit profile</span>
                                     </div>
-                                    <div className='menu-item' onClick={() => { { setIsUpdateLocation(true); handleProfileClick(); } }}>
+                                    <div className='menu-item' onClick={() => { setIsUpdateLocation(true); handleProfileClick(); }}>
                                         <MdOutlineEditLocation className='menu-icon' />
                                         <span className='menu-title'>Manage address</span>
                                     </div>
@@ -251,6 +285,9 @@ function Header() {
 
                 )
             }
+            
+            {/* Cart Modal */}
+            {showCart && <Cart onClose={() => setShowCart(false)} />}
 
 
         </div >

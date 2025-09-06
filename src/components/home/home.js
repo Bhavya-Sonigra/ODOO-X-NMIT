@@ -21,6 +21,7 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 import AuthPopup from '../../auth/authPopup'
 import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
 import { useLocation } from '../contexts/LocationContext';
 import { useToast } from '../contexts/ToastService';
 import { useAuth } from '../contexts/AuthContext';
@@ -28,6 +29,7 @@ import ApiService from '../../services/apiService';
 
 function Home() {
     const { fetchWishlist } = useWishlist();
+    const { addToCart } = useCart();
     const [products, setProducts] = useState([]);
     const [filterCategory, setFilterCategory] = useState('');
     const [isLoading, setIsLoading] = useState(false)
@@ -149,6 +151,40 @@ function Home() {
             setAuthPopup(true);
         }
     };
+
+    const handleAddToCart = async (product, event) => {
+        event.stopPropagation(); // Prevent navigation to product detail
+
+        if (!isAuthenticated) {
+            setAuthPopup(true);
+            return;
+        }
+
+        if (product.productStatus?.isSold) {
+            notifyError('This product is no longer available');
+            return;
+        }
+
+        if (user.userId === product.userId) {
+            notifyWarning('You cannot add your own product to cart');
+            return;
+        }
+
+        try {
+            await addToCart({
+                productId: product.productId,
+                title: product.title,
+                price: product.price,
+                image: product.images?.[0] || '',
+                sellerId: product.userId,
+                sellerName: product.sellerName || 'Unknown Seller'
+            });
+            notifySuccess('Product added to cart!');
+        } catch (error) {
+            notifyError('Failed to add product to cart');
+        }
+    };
+
     const handleAuthPopup = (closePopup) => {
         setAuthPopup(closePopup);
     }
@@ -372,17 +408,28 @@ function Home() {
                                             <span className='h-product-location'>{product.address}</span>
                                         </div>
                                     </div>
-                                    <div
-                                        className='h-product-like-icon-wrapper'
-                                        onClick={() => toggleWishlist(product.productId)}
-                                        disabled={isAddingWishList[product.productId]}
-                                    >
-                                        {isAddingWishList[product.productId] ? (
-                                            <ClipLoader size={12} color='grey' />
-                                        ) : wishlistStatus[product.productId] ? (
-                                            <IoMdHeart color='red' className='h-product-like-icon' />
-                                        ) : (
-                                            <IoMdHeartEmpty className='h-product-like-icon' />
+                                    <div className='h-product-actions'>
+                                        <div
+                                            className='h-product-like-icon-wrapper'
+                                            onClick={() => toggleWishlist(product.productId)}
+                                            disabled={isAddingWishList[product.productId]}
+                                        >
+                                            {isAddingWishList[product.productId] ? (
+                                                <ClipLoader size={12} color='grey' />
+                                            ) : wishlistStatus[product.productId] ? (
+                                                <IoMdHeart color='red' className='h-product-like-icon' />
+                                            ) : (
+                                                <IoMdHeartEmpty className='h-product-like-icon' />
+                                            )}
+                                        </div>
+                                        {user.userId !== product.userId && !product.productStatus?.isSold && (
+                                            <button 
+                                                className='h-add-to-cart-btn'
+                                                onClick={(e) => handleAddToCart(product, e)}
+                                                title="Add to Cart"
+                                            >
+                                                🛒
+                                            </button>
                                         )}
                                     </div>
                                 </div>

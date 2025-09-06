@@ -5,10 +5,12 @@ import { BiMessageRounded } from "react-icons/bi";
 import { VscAdd } from "react-icons/vsc";
 import { GoBell } from "react-icons/go";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { AiOutlineShoppingCart, AiOutlineFileText, AiOutlineSearch, AiOutlineUserAdd, AiOutlineAppstore } from "react-icons/ai";
 import AuthPopup from '../../auth/authPopup'
 import { useSocket } from '../contexts/SocketContext';
 import { NotificationContext } from '../contexts/NotificationContext';
 import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { AiOutlineLogout, AiOutlineProduct } from "react-icons/ai";
 import { RiApps2AddLine } from "react-icons/ri";
@@ -21,6 +23,7 @@ function SideBar() {
     const { totalUnseenMsgCount } = useSocket();
     const { unreadCount } = useContext(NotificationContext);
     const { wishlistCount } = useWishlist();
+    const { cartItemsCount } = useCart();
     const { user, isAuthenticated, setAuthenticated } = useAuth();
     const navigate = useNavigate();
 
@@ -58,7 +61,7 @@ function SideBar() {
     return (
         <div className="sidebar-container">
             <div className='sidebar-item-container site-logo' onClick={()=>navigate('/')}>
-                <img src={logo} className='sidebar-logo' />
+                <img src={logo} className='sidebar-logo' alt="EcoFinds Logo" />
             </div>
             <div className='sidebar-item-for-notify-icon'>
                 <NavLink
@@ -108,6 +111,56 @@ function SideBar() {
                     <div className='notify-icon'>
                         {unreadCount}
                     </div>)}
+            </div>
+
+            {/* New Features */}
+            <div className='sidebar-item-for-notify-icon'>
+                <NavLink
+                    to="/cart"
+                    className={({ isActive }) => (isActive ? 'active-link sidebar-item-container' : 'sidebar-item-container')}>
+                    <AiOutlineShoppingCart className='s-icon' />
+                    <span className='sidebar-item'>Cart</span>
+                </NavLink>
+                {cartItemsCount > 0 && (
+                    <div className='notify-icon'>
+                        {cartItemsCount}
+                    </div>)}
+            </div>
+
+            <div className='sidebar-item-for-notify-icon'>
+                <NavLink
+                    to="/orders"
+                    className={({ isActive }) => (isActive ? 'active-link sidebar-item-container' : 'sidebar-item-container')}>
+                    <AiOutlineFileText className='s-icon' />
+                    <span className='sidebar-item'>Orders</span>
+                </NavLink>
+            </div>
+
+            <div className='sidebar-item-for-notify-icon'>
+                <NavLink
+                    to="/saved-searches"
+                    className={({ isActive }) => (isActive ? 'active-link sidebar-item-container' : 'sidebar-item-container')}>
+                    <AiOutlineSearch className='s-icon' />
+                    <span className='sidebar-item'>Searches</span>
+                </NavLink>
+            </div>
+
+            <div className='sidebar-item-for-notify-icon'>
+                <NavLink
+                    to="/favorite-sellers"
+                    className={({ isActive }) => (isActive ? 'active-link sidebar-item-container' : 'sidebar-item-container')}>
+                    <AiOutlineUserAdd className='s-icon' />
+                    <span className='sidebar-item'>Favorites</span>
+                </NavLink>
+            </div>
+
+            <div className='sidebar-item-for-notify-icon'>
+                <NavLink
+                    to="/categories"
+                    className={({ isActive }) => (isActive ? 'active-link sidebar-item-container' : 'sidebar-item-container')}>
+                    <AiOutlineAppstore className='s-icon' />
+                    <span className='sidebar-item'>Categories</span>
+                </NavLink>
             </div>
 
             {

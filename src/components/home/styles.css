@@ -315,20 +315,55 @@
     font-size: 12px;
 }
 
-.h-product-like-icon-wrapper {
+/* Product Actions Container */
+.h-product-actions {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: white;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.h-product-like-icon-wrapper {
+    background: var(--text-white);
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    border: 1px solid whitesmoke;
+    border: 1px solid var(--border-light);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.h-product-like-icon-wrapper:hover {
+    background: var(--bg-eco-hover);
+    border-color: var(--primary-green);
+}
+
+/* Add to Cart Button */
+.h-add-to-cart-btn {
+    background: var(--primary-green);
+    color: var(--text-white);
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+}
+
+.h-add-to-cart-btn:hover {
+    background: var(--primary-green-dark);
+    transform: scale(1.1);
+    box-shadow: var(--shadow-green);
 }
 
 .skeleton-animation {
@@ -382,5 +417,27 @@
 
     100% {
         transform: translateX(100%);
+    }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .h-product-actions {
+        gap: 6px;
+    }
+    
+    .h-product-like-icon-wrapper,
+    .h-add-to-cart-btn {
+        height: 28px;
+        width: 28px;
+    }
+    
+    .h-add-to-cart-btn {
+        font-size: 10px;
+    }
+    
+    .add-to-cart-btn {
+        padding: 10px 20px;
+        font-size: 14px;
     }
 }
