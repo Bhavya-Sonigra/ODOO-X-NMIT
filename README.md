@@ -407,7 +407,6 @@ This project was developed as part of a hackathon. For any questions or suggesti
 
 ## 📞 Contact
 
-- **Email**: ecofinds@nmit.edu.in
 - **GitHub**: [Bhavya-Sonigra/ODOO-X-NMIT](https://github.com/Bhavya-Sonigra/ODOO-X-NMIT)
 - **Hackathon**: Odoo X NMIT 2025
 
