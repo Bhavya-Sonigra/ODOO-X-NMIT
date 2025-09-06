@@ -4,6 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const Product = require('../Models/product'); 
 const router = express.Router();
+const { authenticateToken } = require('../middleware/auth');
+const { validateProduct } = require('../middleware/ecofindValidation');
+const { uploadToCloudinary, getPlaceholderImage } = require('../utils/imageUtils');
 
 
 const BASE_URL = 'http://localhost:5000/files'; 
@@ -26,12 +29,32 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/upload-product', upload.array('images', 10), async (req, res) => {
-    const {category, brand, title, description, date, price,userId, location, lat, lon } = req.body;
+router.post('/upload-product', authenticateToken, upload.array('images', 10), validateProduct, async (req, res) => {
+    const {category, brand, title, description, date, price, userId, location, lat, lon } = req.body;
     
-    const images = req.files.map((file) => `${BASE_URL}/${userId}/${file.filename}`);
-  
     try {
+      // Upload images to Cloudinary
+      const uploadPromises = req.files.map(file => 
+        uploadToCloudinary(file.path, `users-products/${userId}`)
+      );
+      
+      // If no files uploaded, use a placeholder
+      let cloudinaryResults = [];
+      try {
+        cloudinaryResults = await Promise.all(uploadPromises);
+      } catch (uploadError) {
+        console.error('Error uploading to Cloudinary:', uploadError);
+        // If upload fails, use placeholders
+        cloudinaryResults = [{
+          url: getPlaceholderImage('product', category),
+          publicId: null
+        }];
+      }
+      
+      // Extract image URLs and public IDs
+      const images = cloudinaryResults.map(result => result.url);
+      const imagePublicIds = cloudinaryResults.map(result => result.publicId);
+      
       const product = new Product({
         category,
         brand,
@@ -40,6 +63,7 @@ router.post('/upload-product', upload.array('images', 10), async (req, res) => {
         date,
         price,
         images,
+        imagePublicIds, // Store public IDs for future deletion if needed
         userId,
         address: location, 
         location: {

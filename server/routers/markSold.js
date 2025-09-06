@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../Models/product');
+const { authenticateToken, verifyOwnership } = require('../middleware/auth');
 
 // Route to update the productStatus by productId
-router.put('/products/update-status/:productId', async (req, res) => {
+router.put('/products/update-status/:productId', authenticateToken, verifyOwnership(Product, 'productId'), async (req, res) => {
     const { productId } = req.params;   // Get productId from the URL
     const { isSold } = req.body;        // Get the updated isSold status from request body
 

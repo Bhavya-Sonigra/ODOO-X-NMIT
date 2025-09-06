@@ -1,9 +1,24 @@
 const mongoose = require('mongoose');
 
+// Predefined category taxonomy
+const PRODUCT_CATEGORIES = [
+    'Electronics',
+    'Books',
+    'Study Materials',
+    'Furniture',
+    'Clothing',
+    'Sports Equipment',
+    'Kitchen Appliances',
+    'Home Decor',
+    'Vehicles',
+    'Other'
+];
+
 const productSchema = new mongoose.Schema({
     category: {
         type: String,
-        required: true
+        required: true,
+        enum: PRODUCT_CATEGORIES
     },
     productId: {
         type: String,
@@ -32,6 +47,10 @@ const productSchema = new mongoose.Schema({
     images: { 
         type: [String], 
         required: true 
+    },
+    imagePublicIds: { 
+        type: [String], 
+        default: [] 
     },
     userId: {
         type: String,
@@ -62,6 +81,11 @@ const productSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 productSchema.index({ location: "2dsphere" });
+
+// Export the categories for use in API endpoints
+productSchema.statics.getCategories = function() {
+    return PRODUCT_CATEGORIES;
+};
 
 const Product = mongoose.model('Product', productSchema, 'post');
 module.exports = Product;

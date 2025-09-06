@@ -25,6 +25,12 @@ const updateUsers=require('./routers/updateUser.js');
 const search=require('./routers/search.js');
 const markedAsRead=require('./routers/notifications/markReadNotification.js');
 
+// New EcoFinds routes
+const cart = require('./routers/cart.js');
+const orders = require('./routers/orders.js');
+const userProfile = require('./routers/userProfile.js');
+const categories = require('./routers/categories.js');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -67,6 +73,20 @@ app.use('/users/wishlist',wishlistStatus);
 app.use('/users',sendCallbackRequest);
 app.use('/users/notifications',getNotifications);
 app.use('/users/notifications',markedAsRead);
+
+// New EcoFinds API routes
+app.use('/api', cart);
+app.use('/api', orders);
+app.use('/api', userProfile);
+app.use('/api', categories);
+
+// Import stretch goal routes
+const savedSearches = require('./routers/savedSearches');
+const favoriteSellers = require('./routers/favoriteSellers');
+
+// Mount stretch goal routes
+app.use('/api', savedSearches);
+app.use('/api', favoriteSellers);
 
 app.use('/files',express.static(path.join(__dirname, 'Users-files/users-post-files')));
 app.use('/profiles',express.static(path.join(__dirname, 'Users-files/users-profiles')));

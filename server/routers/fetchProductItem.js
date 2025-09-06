@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../Models/product');
 const User = require('../Models/Users');
+const { optionalAuth } = require('../middleware/auth');
 
-router.get('/product-item/:productId', async (req, res) => {
+router.get('/product-item/:productId', optionalAuth, async (req, res) => {
   try {
     const { productId } = req.params;
     const product = await Product.findOne({ productId });

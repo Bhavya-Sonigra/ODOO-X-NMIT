@@ -1,0 +1,598 @@
+{
+  "info": {
+    "name": "EcoFinds API Collection",
+    "description": "Complete API collection for the EcoFinds marketplace application - a campus-based second-hand marketplace for students",
+    "_postman_id": "unique-postman-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"testuser@example.com\",\n  \"password\": \"Test1234\",\n  \"phoneNumber\": \"1234567890\",\n  \"address\": \"123 Test St\",\n  \"city\": \"Bengaluru\",\n  \"state\": \"Karnataka\",\n  \"zipCode\": \"560001\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/auth/register", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"Test1234\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/auth/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Google Login",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"token\": \"GOOGLE_ID_TOKEN\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/auth/google-login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "auth", "google-login"] }
+          }
+        },
+        {
+          "name": "Generate OTP",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/auth/generate-otp", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "auth", "generate-otp"] }
+          }
+        },
+        {
+          "name": "Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"otp\": \"123456\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/auth/sendOTP", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "auth", "sendOTP"] }
+          }
+        },
+        {
+          "name": "Generate Reset Password OTP",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/auth/generate-reset-pass-otp", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "auth", "generate-reset-pass-otp"] }
+          }
+        },
+        {
+          "name": "Send Reset Password OTP",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"otp\": \"123456\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/auth/sendResetPassOTP", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "auth", "sendResetPassOTP"] }
+          }
+        },
+        {
+          "name": "Update Password",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"NewPassword123\",\n  \"otp\": \"123456\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/auth/updatePass", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "auth", "updatePass"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/api/categories", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "categories"] }
+          }
+        },
+        {
+          "name": "Get Products by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/api/categories/Electronics/products", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "categories", "Electronics", "products"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/post/products/nearby", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "products", "nearby"] }
+          }
+        },
+        {
+          "name": "Get Product Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/post/product-item/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "product-item", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Upload Product",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "body": { 
+              "mode": "formdata", 
+              "formdata": [
+                {"key": "userId", "value": "{{userId}}", "type": "text"},
+                {"key": "title", "value": "Test Product", "type": "text"},
+                {"key": "category", "value": "Electronics", "type": "text"},
+                {"key": "subCategory", "value": "Laptops", "type": "text"},
+                {"key": "brand", "value": "Test Brand", "type": "text"},
+                {"key": "description", "value": "Test Description", "type": "text"},
+                {"key": "price", "value": "100", "type": "text"},
+                {"key": "condition", "value": "Like New", "type": "text"},
+                {"key": "date", "value": "{{$isoTimestamp}}", "type": "text"},
+                {"key": "location", "value": "Test Location", "type": "text"},
+                {"key": "lat", "value": "12.9716", "type": "text"},
+                {"key": "lon", "value": "77.5946", "type": "text"},
+                {"key": "images", "type": "file", "src": null}
+              ] 
+            },
+            "url": { "raw": "http://localhost:5000/users/post/upload-product", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "upload-product"] }
+          }
+        },
+        {
+          "name": "Get Related Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/post/related-items?category=Electronics&productId={{productId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "related-items"], "query": [{"key": "category", "value": "Electronics"}, {"key": "productId", "value": "{{productId}}"}] }
+          }
+        },
+        {
+          "name": "Get User Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/post/user-products/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "user-products", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "body": { 
+              "mode": "formdata", 
+              "formdata": [
+                {"key": "title", "value": "Updated Product", "type": "text"},
+                {"key": "category", "value": "Electronics", "type": "text"},
+                {"key": "subCategory", "value": "Laptops", "type": "text"},
+                {"key": "brand", "value": "Updated Brand", "type": "text"},
+                {"key": "description", "value": "Updated Description", "type": "text"},
+                {"key": "price", "value": "150", "type": "text"},
+                {"key": "condition", "value": "Good", "type": "text"},
+                {"key": "images", "type": "file", "src": null}
+              ] 
+            },
+            "url": { "raw": "http://localhost:5000/users/post/update-product/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "update-product", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/users/post/product/delete-product/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "product", "delete-product", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Mark Product as Sold",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"isSold\": true\n}" },
+            "url": { "raw": "http://localhost:5000/users/post/products/update-status/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "products", "update-status", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/post/search?q=laptop&category=Electronics&minPrice=100&maxPrice=1000&condition=Good", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "search"], "query": [{"key": "q", "value": "laptop"}, {"key": "category", "value": "Electronics"}, {"key": "minPrice", "value": "100"}, {"key": "maxPrice", "value": "1000"}, {"key": "condition", "value": "Good"}] }
+          }
+        },
+        {
+          "name": "Filter Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/post/search?q=test", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "search"], "query": [{"key": "q", "value": "test"}] }
+          }
+        },
+        {
+          "name": "Get User Products",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/users/post/user-post?userId={{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "post", "user-post"], "query": [{"key": "userId", "value": "{{userId}}"}] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart & Checkout",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/cart", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "cart"] }
+          }
+        },
+        {
+          "name": "Add Item to Cart",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 1\n}" },
+            "url": { "raw": "http://localhost:5000/api/cart/items", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "cart", "items"] }
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"quantity\": 2\n}" },
+            "url": { "raw": "http://localhost:5000/api/cart/items/{{cartItemId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "cart", "items", "{{cartItemId}}"] }
+          }
+        },
+        {
+          "name": "Remove Cart Item",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/cart/items/{{cartItemId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "cart", "items", "{{cartItemId}}"] }
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/cart", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "cart"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"shippingAddress\": \"123 Main St\",\n  \"paymentMethod\": \"credit_card\"\n}" },
+            "url": { "raw": "http://localhost:5000/api/orders", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "orders"] }
+          }
+        },
+        {
+          "name": "Get Orders",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/orders?userId={{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "orders"], "query": [{"key": "userId", "value": "{{userId}}"}] }
+          }
+        },
+        {
+          "name": "Get Order Details",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/orders/{{orderId}}?userId={{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "orders", "{{orderId}}"], "query": [{"key": "userId", "value": "{{userId}}"}] }
+          }
+        },
+        {
+          "name": "Process Payment",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"paymentMethod\": \"credit_card\"\n}" },
+            "url": { "raw": "http://localhost:5000/api/orders/{{orderId}}/payment", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "orders", "{{orderId}}", "payment"] }
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"shipped\",\n  \"userId\": \"{{userId}}\"\n}" },
+            "url": { "raw": "http://localhost:5000/api/orders/{{orderId}}/status", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "orders", "{{orderId}}", "status"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Profile",
+      "item": [
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/users/me?userId={{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "me"], "query": [{"key": "userId", "value": "{{userId}}"}] }
+          }
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "body": { "mode": "formdata", "formdata": [
+              {"key": "userId", "value": "{{userId}}", "type": "text"},
+              {"key": "name", "value": "Test User", "type": "text"},
+              {"key": "username", "value": "testuser", "type": "text"},
+              {"key": "phoneNumber", "value": "1234567890", "type": "text"},
+              {"key": "address", "value": "123 Test St", "type": "text"},
+              {"key": "city", "value": "Test City", "type": "text"},
+              {"key": "state", "value": "Test State", "type": "text"},
+              {"key": "zipCode", "value": "123456", "type": "text"},
+              {"key": "avatar", "type": "file"}
+            ] },
+            "url": { "raw": "http://localhost:5000/api/users/me", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "me"] }
+          }
+        },
+        {
+          "name": "Get Public User Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/api/users/profile/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "profile", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Check Username Availability",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/api/users/check-username/testuser?currentUserId={{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "check-username", "testuser"], "query": [{"key": "currentUserId", "value": "{{userId}}"}] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wishlist",
+      "item": [
+        {
+          "name": "Add to Wishlist",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"productId\": \"{{productId}}\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/wishlist/add-to-wishlist", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "wishlist", "add-to-wishlist"] }
+          }
+        },
+        {
+          "name": "Get Wishlist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/wishlist/user-wishlist/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "wishlist", "user-wishlist", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Check Wishlist Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/wishlist/status?userId={{userId}}&productId={{productId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "wishlist", "status"], "query": [{"key": "userId", "value": "{{userId}}"}, {"key": "productId", "value": "{{productId}}"}] }
+          }
+        },
+        {
+          "name": "Remove from Wishlist",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/wishlist/remove-user-wishlist/{{userId}}/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "wishlist", "remove-user-wishlist", "{{userId}}", "{{productId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/notifications/get-notifications/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "notifications", "get-notifications", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/notifications/markAsRead/{{userId}}/{{notificationId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "notifications", "markAsRead", "{{userId}}", "{{notificationId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Get Chat List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/chat-list/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "chat-list", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Get Chat Messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/{{senderId}}/{{receiverId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "{{senderId}}", "{{receiverId}}"] }
+          }
+        },
+        {
+          "name": "Send Callback Request",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"buyerId\": \"{{userId}}\",\n  \"sellerId\": \"{{sellerId}}\",\n  \"productId\": \"{{productId}}\",\n  \"message\": \"I am interested in this product\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/send-call-back-request", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "send-call-back-request"] }
+          }
+        },
+        {
+          "name": "Mark Message as Seen",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/mark-seen/{{chatId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "mark-seen", "{{chatId}}"] }
+          }
+        },
+        {
+          "name": "Delete Message",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/delete-message/{{messageId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "delete-message", "{{messageId}}"] }
+          }
+        },
+        {
+          "name": "Delete Chat",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/delete-chat/{{chatId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "delete-chat", "{{chatId}}"] }
+          }
+        },
+        {
+          "name": "Block User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"blockedUserId\": \"{{blockedUserId}}\"\n}" },
+            "url": { "raw": "http://localhost:5000/users/block-user/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "block-user", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Get Blocked Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/users/blocked-users/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["users", "blocked-users", "{{userId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Saved Searches",
+      "item": [
+        {
+          "name": "Get Saved Searches",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/saved-searches", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "saved-searches"] }
+          }
+        },
+        {
+          "name": "Create Saved Search",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Electronics under $500\",\n  \"query\": {\n    \"searchTerm\": \"laptop\",\n    \"category\": \"Electronics\",\n    \"maxPrice\": 500\n  },\n  \"notificationsEnabled\": true\n}" },
+            "url": { "raw": "http://localhost:5000/api/saved-searches", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "saved-searches"] }
+          }
+        },
+        {
+          "name": "Update Saved Search",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Electronics under $600\",\n  \"query\": {\n    \"searchTerm\": \"laptop\",\n    \"category\": \"Electronics\",\n    \"maxPrice\": 600\n  },\n  \"notificationsEnabled\": true\n}" },
+            "url": { "raw": "http://localhost:5000/api/saved-searches/{{savedSearchId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "saved-searches", "{{savedSearchId}}"] }
+          }
+        },
+        {
+          "name": "Delete Saved Search",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/saved-searches/{{savedSearchId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "saved-searches", "{{savedSearchId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Favorite Sellers",
+      "item": [
+        {
+          "name": "Get Favorite Sellers",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/favorites/sellers", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "favorites", "sellers"] }
+          }
+        },
+        {
+          "name": "Add Favorite Seller",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"sellerId\": \"{{sellerId}}\",\n  \"notes\": \"Great seller with quality items\"\n}" },
+            "url": { "raw": "http://localhost:5000/api/favorites/sellers", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "favorites", "sellers"] }
+          }
+        },
+        {
+          "name": "Update Favorite Seller Notes",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+            "body": { "mode": "raw", "raw": "{\n  \"notes\": \"Updated notes about this seller\"\n}" },
+            "url": { "raw": "http://localhost:5000/api/favorites/sellers/{{sellerId}}/notes", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "favorites", "sellers", "{{sellerId}}", "notes"] }
+          }
+        },
+        {
+          "name": "Remove Favorite Seller",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": { "raw": "http://localhost:5000/api/favorites/sellers/{{sellerId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "favorites", "sellers", "{{sellerId}}"] }
+          }
+        }
+      ]
+    }
+
+  ],
+  "variable": [
+    { "key": "jwt_token", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "productId", "value": "" },
+    { "key": "sellerId", "value": "" },
+    { "key": "notificationId", "value": "" },
+    { "key": "chatId", "value": "" },
+    { "key": "messageId", "value": "" },
+    { "key": "blockedUserId", "value": "" },
+    { "key": "savedSearchId", "value": "" },
+    { "key": "receiverId", "value": "" },
+    { "key": "senderId", "value": "" }
+  ]
+}

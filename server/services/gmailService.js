@@ -15,7 +15,7 @@ class EmailService {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: userEmail,
-            subject: 'Email Verification - EX2NEXT',
+            subject: 'Email Verification - ODOOXNMIT',
             html: this.getOTPTemplate(userName, otp, 'Email Verification', 'Thank you for signing up! Please use the following OTP to verify your email.')
         };
 
@@ -26,7 +26,7 @@ class EmailService {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: userEmail,
-            subject: 'Password Reset - EX2NEXT',
+            subject: 'Password Reset - ODOOXNMIT',
             html: this.getOTPTemplate('User', otp, 'Password Reset Verification', 'You have requested to reset your password. Please use the following OTP to verify your identity.')
         };
 
@@ -37,7 +37,7 @@ class EmailService {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: userEmail,
-            subject: 'Callback Request - EX2NEXT',
+            subject: 'Callback Request - ODOOXNMIT',
             html: this.getCallbackTemplate(sellerName, buyerName, productTitle)
         };
 
@@ -129,7 +129,7 @@ class EmailService {
       </div>
       <div class="footer">
           <p>If you didn't request this, please ignore this email or contact support.</p>
-          <p>&copy; 2024 EX2NEXT Resale Marketplace. All rights reserved.</p>
+          <p>&copy; 2024 ODOOXNMIT Resale Marketplace. All rights reserved.</p>
       </div>
   </div>
 </body>
@@ -203,10 +203,10 @@ class EmailService {
               <strong>Product:</strong> ${productTitle}
           </div>
           <p>The buyer is interested in your product and would like you to contact them back. Please reach out to them as soon as possible.</p>
-          <p>Thank you for using EX2NEXT!</p>
+          <p>Thank you for using ODOOXNMIT!</p>
       </div>
       <div class="footer">
-          <p>&copy; 2024 EX2NEXT Resale Marketplace. All rights reserved.</p>
+          <p>&copy; 2024 ODOOXNMIT Resale Marketplace. All rights reserved.</p>
       </div>
   </div>
 </body>
