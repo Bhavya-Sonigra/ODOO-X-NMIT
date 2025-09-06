@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     const { notifySuccess, notifyError } = useToast();
     const [isAuthenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState({});
+    const [token, setToken] = useState(null);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const userData=JSON.parse(localStorage.getItem('userData'));
 
@@ -132,6 +133,10 @@ export const AuthProvider = ({ children }) => {
                             notifySuccess('Signed Up successfully!');
                             const encryptedUserData = CryptoService.encryptData(data.userData);
                             localStorage.setItem('userData', JSON.stringify(encryptedUserData));
+                            if (data.token) {
+                                localStorage.setItem('authToken', data.token);
+                                setToken(data.token);
+                            }
                             setAuthenticated(true);
                         }
                     } else {
@@ -177,6 +182,10 @@ export const AuthProvider = ({ children }) => {
                     notifySuccess('Signed Up successfully!');
                     const encryptedUserData=CryptoService.encryptData(data.userData);
                     localStorage.setItem('userData', JSON.stringify(encryptedUserData));
+                    if (data.token) {
+                        localStorage.setItem('authToken', data.token);
+                        setToken(data.token);
+                    }
                     setAuthenticated(true);
                 }
                 return { success: true, data };
@@ -258,6 +267,10 @@ export const AuthProvider = ({ children }) => {
                             notifySuccess('Signed In Successfully');
                             const encryptedUserData = CryptoService.encryptData(data.userData);
                             localStorage.setItem('userData', JSON.stringify(encryptedUserData));
+                            if (data.token) {
+                                localStorage.setItem('authToken', data.token);
+                                setToken(data.token);
+                            }
                             setAuthenticated(true);
                         }
                     } else {
@@ -301,6 +314,10 @@ export const AuthProvider = ({ children }) => {
                             notifySuccess('Signed In Successfully');
                             const encryptedUserData=CryptoService.encryptData(data.userData);
                             localStorage.setItem('userData', JSON.stringify(encryptedUserData));
+                            if (data.token) {
+                                localStorage.setItem('authToken', data.token);
+                                setToken(data.token);
+                            }
                             setAuthenticated(true);
                     }
                 }
@@ -323,14 +340,17 @@ export const AuthProvider = ({ children }) => {
 
    
 
-    useEffect(() => {
-      if(userData){
-        const decryptedUserData=CryptoService.decryptData(userData);
-        setUser(decryptedUserData);
-        setAuthenticated(true);
-
-      }
-    },[userData]);
+        useEffect(() => {
+            if(userData){
+                const decryptedUserData=CryptoService.decryptData(userData);
+                setUser(decryptedUserData);
+                setAuthenticated(true);
+            }
+            const savedToken = localStorage.getItem('authToken');
+            if (savedToken) {
+                setToken(savedToken);
+            }
+        },[userData]);
 
 
 
@@ -361,7 +381,9 @@ export const AuthProvider = ({ children }) => {
                 isAuthenticated,
                 setAuthenticated,
                 user,
-                setUser
+                setUser,
+                token,
+                setToken
                
 
 

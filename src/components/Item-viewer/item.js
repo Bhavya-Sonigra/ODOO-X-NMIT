@@ -41,6 +41,7 @@ const Item = () => {
     const [isOpenItemLoading, setIsOpenItemLoading] = useState(true);
     const [isRelatedItemLoading, setIsRelatedItemLoading] = useState(true);
     const [isWishlist, setWishlist] = useState(false);
+    const PRODUCT_PLACEHOLDER = 'https://via.placeholder.com/400x300/e0e0e0/666666?text=Product+Image';
 
 
 
@@ -240,6 +241,11 @@ const Item = () => {
     const handleProfileImageError = (event) => {
         event.target.src = userIcon;
     }
+    const handleProductImageError = (e) => {
+        // prevent infinite loop in some browsers
+        e.currentTarget.onerror = null;
+        e.currentTarget.src = PRODUCT_PLACEHOLDER;
+    };
     const handleDoubleClick = () => {
         setScale(prevScale => (prevScale === 1 ? 2 : 1));
     };
@@ -326,24 +332,28 @@ const Item = () => {
 
                     <div className='item-viewer-details-wrapper'>
 
-                        {productItem && productImages.length > 0 && (
+                        {productItem && (
                             <div className="item-carousel-container">
-                                {productImages.length > 0 && (
-                                    <div className="item-viewer-carousel" {...handlers}>
-                                        <div className="carousel-image-wrapper">
-                                            <img
-                                                src={productImages[imgCurrentIndex]}
-                                                alt={`Selected ${imgCurrentIndex}`}
-                                                className="carousel-image" />
-                                        </div>
-                                        <button className="prev-button" onClick={showPrev}>
-                                            <TfiAngleLeft />
-                                        </button>
-                                        <button className="next-button" onClick={showNext}>
-                                            <TfiAngleRight />
-                                        </button>
+                                <div className="item-viewer-carousel" {...handlers}>
+                                    <div className="carousel-image-wrapper">
+                                        <img
+                                            src={productImages?.[imgCurrentIndex] || PRODUCT_PLACEHOLDER}
+                                            alt={`Selected ${imgCurrentIndex}`}
+                                            className="carousel-image"
+                                            onError={handleProductImageError}
+                                        />
                                     </div>
-                                )}
+                                    {productImages.length > 1 && (
+                                        <>
+                                            <button className="prev-button" onClick={showPrev}>
+                                                <TfiAngleLeft />
+                                            </button>
+                                            <button className="next-button" onClick={showNext}>
+                                                <TfiAngleRight />
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
                                 {productImages.length > 0 && (
                                     <div className="circle-indicators">
                                         {productImages.map((_, index) => (
@@ -513,18 +523,15 @@ const Item = () => {
                         <div className='related-item-wrapper'>
                             {relatedProductItem.map((relatedItem, index) => (
                                 <div key={index} className='related-item'>
-                                    {relatedItem.images.length > 0 && (
-                                        <div className='related-item-img-wrapper' onClick={() => fetchProductItem(relatedItem.productId)}>
-                                            <img
-
-                                                className='related-item-img'
-                                                src={relatedItem.images[0]}
-                                                alt={relatedItem.title}
-                                                loading='lazy'
-
-                                            />
-                                        </div>
-                                    )}
+                                    <div className='related-item-img-wrapper' onClick={() => fetchProductItem(relatedItem.productId)}>
+                                        <img
+                                            className='related-item-img'
+                                            src={relatedItem.images?.[0] || PRODUCT_PLACEHOLDER}
+                                            alt={relatedItem.title}
+                                            loading='lazy'
+                                            onError={handleProductImageError}
+                                        />
+                                    </div>
                                     <div className='related-item-info' onClick={() => fetchProductItem(relatedItem.productId)}>
                                         <div className='h-price-and-date'>
                                             <span className='h-product-price'>{relatedItem.price}</span>

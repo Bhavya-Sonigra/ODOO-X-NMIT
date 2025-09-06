@@ -386,11 +386,21 @@ function Home() {
                         <div className='home-all-post-wrapper'>
                             {products.map(product => (
                                 <div key={product._id} className='h-product-item'>
-                                    {product.images.length > 0 && (
+                                    {Array.isArray(product.images) && product.images.length > 0 ? (
                                         <div className='h-product-img-wrapper'  onClick={() => openItem(product)}>
                                             <img
                                                 className='h-product-img'
                                                 src={product.images[0]}
+                                                alt={product.title}
+                                                loading='lazy'
+                                                onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/400x300/e0e0e0/666666?text=Product+Image'; }}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className='h-product-img-wrapper'  onClick={() => openItem(product)}>
+                                            <img
+                                                className='h-product-img'
+                                                src={'https://via.placeholder.com/400x300/e0e0e0/666666?text=Product+Image'}
                                                 alt={product.title}
                                                 loading='lazy'
                                             />

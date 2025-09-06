@@ -37,6 +37,7 @@ function ProfileWrapper() {
 
     const logOut = () => {
         localStorage.removeItem('userData');
+        localStorage.removeItem('authToken');
         const data = JSON.parse(localStorage.getItem('userData'));
         if (!data) {
             setAuthenticated(false);

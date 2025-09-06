@@ -94,7 +94,7 @@ function ProductDetails() {
         else {
             navigate('/')
         }
-    },[isAuthenticated,user])
+    },[isAuthenticated, user, currentLocation.countryCode, navigate])
   
     const getCurrentDate = () => {
         const today = new Date();
@@ -120,8 +120,14 @@ function ProductDetails() {
             }
         }
         else if (stepIndex === 1) {
-            if (!title || !description) {
+            const trimmedTitle = (title || '').trim();
+            const trimmedDesc = (description || '').trim();
+            if (!trimmedTitle || !trimmedDesc) {
                 notifyError('Please fill in all the details!');
+            } else if (trimmedTitle.length < 3) {
+                notifyError('Title must be at least 3 characters');
+            } else if (trimmedDesc.length < 10) {
+                notifyError('Description must be at least 10 characters');
             } else {
                 setStepIndex(2);
 
@@ -141,8 +147,9 @@ function ProductDetails() {
             }
         }
         else if (stepIndex === 3) {
-            if (!proPrice) {
-                notifyError('Please set price !');
+            const numericPrice = parseFloat(String(proPrice).replace(/[^0-9.]/g, ''));
+            if (!numericPrice || Number.isNaN(numericPrice) || numericPrice <= 0) {
+                notifyError('Please enter a valid price');
             } else {
                 setStepIndex(4);
                 setIsUpdateLocation(true);
@@ -163,13 +170,31 @@ function ProductDetails() {
     }
 
     const uploadProductData = async () => {
+        // Final guard before sending
+        const trimmedTitle = (title || '').trim();
+        const trimmedDesc = (description || '').trim();
+        const numericPrice = parseFloat(String(proPrice).replace(/[^0-9.]/g, ''));
+        if (!trimmedTitle || trimmedTitle.length < 3) {
+            notifyError('Title must be at least 3 characters');
+            return;
+        }
+        if (!trimmedDesc || trimmedDesc.length < 10) {
+            notifyError('Description must be at least 10 characters');
+            return;
+        }
+        if (!numericPrice || Number.isNaN(numericPrice) || numericPrice <= 0) {
+            notifyError('Please enter a valid price');
+            return;
+        }
         setIsLoading(true);
-        const price = currencySymbol + ' ' + proPrice;
-        const formData = new FormData();
-        formData.append('category', selectedTitle);
+    // Server requires numeric price; send plain number string
+    const price = String(parseFloat(String(proPrice).replace(/[^0-9.]/g, '')));
+    const formData = new FormData();
+    const backendCategory = mapToBackendCategory(selectedTitle);
+    formData.append('category', backendCategory);
         formData.append('brand', brand);
-        formData.append('title', title);
-        formData.append('description', description);
+    formData.append('title', trimmedTitle);
+    formData.append('description', trimmedDesc);
         formData.append('date', currentDate);
         formData.append('price', price);
         formData.append('userId', user.userId);
@@ -181,8 +206,10 @@ function ProductDetails() {
             formData.append('images', file);
         });
         try {
+            const authToken = localStorage.getItem('authToken');
             const response = await fetch('http://localhost:5000/users/post/upload-product', {
                 method: 'POST',
+                headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : undefined,
                 body: formData,
             });
 
@@ -574,6 +601,38 @@ function ProductDetails() {
 
         </div >,
     ];
+
+    // Map UI category titles to backend enum categories
+    const mapToBackendCategory = (title) => {
+        const t = (title || '').toLowerCase();
+        const direct = {
+            'books': 'Books',
+            'furnitures': 'Furniture',
+            'fashion': 'Clothing',
+            'sports equipment': 'Sports Equipment',
+            'gym & fitness': 'Sports Equipment',
+            'mixer grinder': 'Kitchen Appliances',
+            'fridges': 'Kitchen Appliances',
+            'acs': 'Kitchen Appliances',
+            'washing machines': 'Kitchen Appliances',
+            'clock': 'Home Decor',
+            'vehicles parts': 'Vehicles',
+            'cars': 'Vehicles',
+            'motorcycles': 'Vehicles',
+            'bicycles': 'Vehicles',
+            'other 4 wheeler': 'Vehicles',
+            'properties': 'Other',
+            'pets': 'Other',
+        };
+        if (direct[t]) return direct[t];
+        // Electronics bucket
+        const electronicsList = [
+            'mobiles','tablets','laptops','desktops','drives','camera & lenses','e-appliances',
+            'television','smart watch','earbuds','mouse','keyboard','speaker'
+        ];
+        if (electronicsList.includes(t) || t.includes('headphones')) return 'Electronics';
+        return 'Other';
+    };
 
     return (
         <div className="s-p-container">
