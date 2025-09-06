@@ -99,6 +99,7 @@ ODOO-X-NMIT/
 Bhavya Sonigra
 Nemin Haria
 Jay Dolar
+Parthiv 
 
 🏆 Hackathon Track
 
